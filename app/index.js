@@ -63,13 +63,10 @@ module.exports = yeoman.generators.NamedBase.extend({
     var modulePath = path.join('src', this.rootFolder, this.camelModuleName);
     this.mkdir(modulePath);
 
-    this.log(modulePath);
-    this.log(path.join(modulePath, this.camelModuleName + '.module.js'));
-
     this.template('_module.module.js', path.join(modulePath, this.camelModuleName + '.module.js'));
 
     this._processDirectory('module', '');
-    this._addModuleToAppJs(this.projectName, this.camelModuleName, this.lowerModuleName);
+  //  this._addModuleToAppJs(this.projectName, this.camelModuleName, this.lowerModuleName);
   },
 
   touchIndexHtml: function() {
