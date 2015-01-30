@@ -1,5 +1,5 @@
 /**
- * <%= name %> Module
+ * <%= capitalModuleName %> Module
  */
 
 angular.module('<%= name %>', [
