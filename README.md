@@ -45,3 +45,11 @@ If you'd like to get to know Yeoman better and meet some of his friends, [Grunt]
 ## License
 
 MIT
+
+## TODO
+
+* add option to --remove module
+* add prompt to scaffold controller into separate directory
+* add prompt to scaffold directives into separate directory
+* add prompt to scaffold services into separate directory
+* add prompt to scaffold filters into separate directory
