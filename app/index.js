@@ -99,16 +99,25 @@ module.exports = yeoman.generators.NamedBase.extend({
     }
   },
 
-  _addModuleToAppJs: function app(projectName, camelModuleName, lowerModuleName) {
-    var hook   = '])));',
-      path   = 'src/app/app.js',
-      insert = "    '" + projectName + "." + camelModuleName + "',\n";
+  _addModuleToAppJs: function app(camelModuleName) {
+    this.log(this.sourceRoot());
 
-    var file   = this.readFileAsString(path);
+    var path = 'src/app/app.js';
 
-    if (file.indexOf(insert) === -1) {
-      this.write(path, file.replace(hook, insert + hook));
+    var file = this.readFileAsString(path);
+    var start = file.indexOf('[');
+    var end = file.indexOf(']');
+
+    if (!file || start === -1 || end === -1) {
+      return false;
     }
+
+    var substr = file.substring(start, end + 1);
+    var parsed = esprima.parse(substr);
+    var module = esprima.parse("'" + camelModuleName + "'");
+    parsed.body[0].expression.elements.push(module.body[0].expression);
+    var newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
+    this.write(path, newFile);
   }
 
 });

@@ -16,7 +16,8 @@ angular.module('<%= name %>', [
 
     $stateProvider.state('<%= lowerModuleName %>', {
       url: '/<%= lowerModuleName %>',
-      templateUrl: '<%= lowerModuleName %>/views/<%= lowerModuleName %>.tpl.html'
+      templateUrl: '<%= lowerModuleName %>/views/<%= lowerModuleName %>.tpl.html',
+      data : { pageTitle: '<%= capitalModuleName %> Page' }
     });
   })
 
