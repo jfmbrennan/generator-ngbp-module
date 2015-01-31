@@ -2,12 +2,15 @@
 var path = require('path');
 var touch = require("touch");
 var yeoman = require('yeoman-generator');
+var esprima = require('esprima');
+var escodegen = require('escodegen');
 
 module.exports = yeoman.generators.NamedBase.extend({
 
   init: function () {
     var pkg = this.fs.readJSON('package.json', {name: 'projectName'});
     this.projectName = pkg.name;
+
   },
 
   askFor: function () {
@@ -61,12 +64,15 @@ module.exports = yeoman.generators.NamedBase.extend({
     this.capitalModuleName = this._.capitalize(this.name);
     this.lowerModuleName = this.name.toLowerCase();
     var modulePath = path.join('src', this.rootFolder, this.camelModuleName);
+    var viewPath = path.join(modulePath, 'views');
     this.mkdir(modulePath);
+    this.mkdir(viewPath);
 
     this.template('_module.module.js', path.join(modulePath, this.camelModuleName + '.module.js'));
+    this.template('_module.tpl.html', path.join(viewPath, this.camelModuleName + '.tpl.html'));
 
-    this._processDirectory('module', '');
-  //  this._addModuleToAppJs(this.projectName, this.camelModuleName, this.lowerModuleName);
+  //  this._processDirectory('module', '');
+    this._addModuleToAppJs(this.camelModuleName);
   },
 
   touchIndexHtml: function() {
