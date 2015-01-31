@@ -100,10 +100,7 @@ module.exports = yeoman.generators.NamedBase.extend({
   },
 
   _addModuleToAppJs: function app(camelModuleName) {
-    this.log(this.sourceRoot());
-
     var path = 'src/app/app.js';
-
     var file = this.readFileAsString(path);
     var start = file.indexOf('[');
     var end = file.indexOf(']');
