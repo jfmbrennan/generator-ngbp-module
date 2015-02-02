@@ -7,25 +7,40 @@ var helpers = require('yeoman-generator').test;
 
 describe('ngbp-module:app', function () {
 
-  before(function (done) {
-    helpers.run(path.join(__dirname, '../app'))
+  var runGen;
+
+  beforeEach(function () {
+    runGen = helpers
+      .run(path.join(__dirname, '../app'))
       .inDir(path.join(__dirname, './temp'))
-      .withOptions({ 'skip-install': true })
       .withArguments(['newModule'])
       .withPrompt({
         rootFolder: 'app',
         modules: ['templates', 'uiRouter']
       })
-      .on('ready', function () {
-        fs.writeFileSync('./src/app/app.js', "angular.module('test', ['existingModule'])");
-      })
-      .on('end', done);
+      .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);
   });
 
-  it('creates files', function () {
-    assert.file([
-      'src/app/app.js',
-      'src/app/newModule/newModule.module.js'
-    ]);
+  it('creates files', function (done) {
+    runGen.withOptions({ 'skip-install': true })
+      .on('end', function () {
+        assert.file([
+          'src/app/app.js',
+          'src/app/newModule/newModule.module.js'
+        ])
+      });
+    done();
   });
+
+/*  it('updates app.js', function (done) {
+    runGen.withOptions({ 'skip-install': true })
+      .on('ready', function () {
+        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['existingModule'])");
+      })
+      .on('end', function () {
+        assert.fileContent('src/app/app.js', "angular.module('test', [\n    'existingModule',\n    'newModule'\n])");
+      });
+    done();
+  });*/
+
 });
