@@ -29,10 +29,16 @@ To install generator-ngbp-module from npm, run:
 npm install -g generator-ngbp-module
 ```
 
-Finally, initiate the generator:
+Finally, create the module <name>:
 
 ```bash
-yo ngbp-module
+yo ngbp-module <name>
+```
+
+You can always reverse this by:
+
+```bash
+yo ngbp-module:remove <name>
 ```
 
 ### Getting To Know Yeoman
@@ -42,13 +48,9 @@ Yeoman has a heart of gold. He's a person with feelings and opinions, but he's v
 If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
 
 
-## License
-
-MIT
-
 ## TODO
 
-* add option to --remove module
+* update README to contain more meaningful info
 * add prompt to scaffold controller into separate directory
 * add prompt to scaffold directives into separate directory
 * add prompt to scaffold services into separate directory
