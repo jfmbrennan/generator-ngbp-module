@@ -18,29 +18,30 @@ describe('ngbp-module:app', function () {
         rootFolder: 'app',
         modules: ['templates', 'uiRouter']
       })
-      .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);
+      .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']])
+      .on('ready', function () {
+        fs.ensureDirSync('./test/temp/src/app');
+        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['existingModule'])");
+      });
   });
 
   it('creates files', function (done) {
     runGen.withOptions({ 'skip-install': true })
       .on('end', function () {
         assert.file([
-          'src/app/app.js',
-          'src/app/newModule/newModule.module.js'
-        ])
+          'test/temp/src/app/app.js',
+          'test/temp/src/app/newModule/newModule.module.js'
+        ]);
+        done();
       });
-    done();
   });
 
-/*  it('updates app.js', function (done) {
+  it('updates app.js', function (done) {
     runGen.withOptions({ 'skip-install': true })
-      .on('ready', function () {
-        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['existingModule'])");
-      })
       .on('end', function () {
-        assert.fileContent('src/app/app.js', "angular.module('test', [\n    'existingModule',\n    'newModule'\n])");
+        assert.fileContent('test/temp/src/app/app.js', "angular.module('test', [\n    'existingModule',\n    'newModule'\n])");
+        done();
       });
-    done();
-  });*/
+  });
 
 });

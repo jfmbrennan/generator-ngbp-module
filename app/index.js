@@ -63,7 +63,7 @@ module.exports = yeoman.generators.NamedBase.extend({
     this.camelModuleName = this._.camelize(this.name);
     this.capitalModuleName = this._.capitalize(this.name);
     this.lowerModuleName = this.name.toLowerCase();
-    var modulePath = path.join(this.destinationPath('src'), this.rootFolder, this.camelModuleName);
+    var modulePath = path.join(this.env.cwd, 'src', this.rootFolder, this.camelModuleName);
     var viewPath = path.join(modulePath, 'views');
     this.mkdir(modulePath);
     this.mkdir(viewPath);
@@ -94,7 +94,7 @@ module.exports = yeoman.generators.NamedBase.extend({
   },
 
   _addModuleToAppJs: function (camelModuleName) {
-    var filePath = path.join(this.destinationPath('src'), 'app', 'app.js');
+    var filePath = path.join(this.env.cwd, 'src', 'app', 'app.js');
     var file = this.readFileAsString(filePath);
     var start = file.indexOf('[');
     var end = file.indexOf(']');
