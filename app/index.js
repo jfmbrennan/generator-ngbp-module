@@ -10,7 +10,6 @@ module.exports = yeoman.generators.NamedBase.extend({
   init: function () {
     var pkg = this.fs.readJSON('package.json', {name: 'projectName'});
     this.projectName = pkg.name;
-
   },
 
   askFor: function () {
@@ -72,7 +71,7 @@ module.exports = yeoman.generators.NamedBase.extend({
     this.template('_module.tpl.html', path.join(viewPath, this.camelModuleName + '.tpl.html'));
 
   //  this._processDirectory('module', '');
-    this._addModuleToAppJs(this.camelModuleName);
+    this._updateAppJs(this.camelModuleName);
   },
 
   _processDirectory: function (source, destination) {
@@ -93,7 +92,7 @@ module.exports = yeoman.generators.NamedBase.extend({
     }
   },
 
-  _addModuleToAppJs: function (camelModuleName) {
+  _updateAppJs: function (camelModuleName) {
     var filePath = path.join(this.env.cwd, 'src', 'app', 'app.js');
     var file = this.readFileAsString(filePath);
     var start = file.indexOf('[');
