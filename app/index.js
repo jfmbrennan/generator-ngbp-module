@@ -63,7 +63,7 @@ module.exports = yeoman.generators.NamedBase.extend({
     this.camelModuleName = this._.camelize(this.name);
     this.capitalModuleName = this._.capitalize(this.name);
     this.lowerModuleName = this.name.toLowerCase();
-    var modulePath = path.join('src', this.rootFolder, this.camelModuleName);
+    var modulePath = path.join(this.destinationPath('src'), this.rootFolder, this.camelModuleName);
     var viewPath = path.join(modulePath, 'views');
     this.mkdir(modulePath);
     this.mkdir(viewPath);
@@ -73,12 +73,6 @@ module.exports = yeoman.generators.NamedBase.extend({
 
   //  this._processDirectory('module', '');
     this._addModuleToAppJs(this.camelModuleName);
-  },
-
-  touchIndexHtml: function() {
-    // Touch the index.html file to force the index grunt task to rebuild it (that task adds the new module to the scripts)
-    var indexHtmlFilePath = 'src/index.html';
-    touch(indexHtmlFilePath, {mtime: true});
   },
 
   _processDirectory: function (source, destination) {
@@ -100,7 +94,7 @@ module.exports = yeoman.generators.NamedBase.extend({
   },
 
   _addModuleToAppJs: function (camelModuleName) {
-    var filePath = 'src/app/app.js';
+    var filePath = path.join(this.destinationPath('src'), 'app', 'app.js');
     var file = this.readFileAsString(filePath);
     var start = file.indexOf('[');
     var end = file.indexOf(']');
