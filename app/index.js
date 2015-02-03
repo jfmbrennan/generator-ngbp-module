@@ -74,6 +74,7 @@ module.exports = yeoman.generators.NamedBase.extend({
     this._updateAppJs(this.camelModuleName);
   },
 
+  /*
   _processDirectory: function (source, destination) {
     var root = this.isPathAbsolute(source) ? source : path.join(this.sourceRoot(), source);
     var files = this.expandFiles('**', { dot: true, cwd: root });
@@ -90,7 +91,7 @@ module.exports = yeoman.generators.NamedBase.extend({
         this.copy(src, dest);
       }
     }
-  },
+  },*/
 
   _updateAppJs: function (camelModuleName) {
     var filePath = path.join(this.env.cwd, 'src', 'app', 'app.js');
