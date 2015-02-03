@@ -31,7 +31,7 @@ module.exports = yeoman.generators.NamedBase.extend({
     if (!this.moduleFound) {
       prompts.unshift({
         name: 'modulePath',
-        message: 'Where do you want to place this module?',
+        message: 'Where is the location of this module?',
         default: 'app'
       });
     }
