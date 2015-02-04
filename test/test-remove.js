@@ -57,6 +57,24 @@ describe('ngbp-module:remove', function () {
       });
   });
 
+  it('does not update app.js if expected syntax cannot be found', function (done) {
+    runGen.withOptions({ 'skip-install': true })
+      .withArguments(['newModule'])
+      .withPrompt({
+        remove: 'Y'
+      })
+      .on('ready', function () {
+        fs.ensureDirSync('./test/temp/src/app');
+        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test')");
+        fs.ensureDirSync('./test/temp/src/app/newModule');
+        fs.writeFileSync('./test/temp/src/app/newModule.module.js', "test file removal");
+      })
+      .on('end', function () {
+        assert.fileContent('test/temp/src/app/app.js', "angular.module('test')");
+        done();
+      });
+  });
+
   it('prompts user for module location', function (done) {
     runGen.withOptions({ 'skip-install': true })
       .withArguments(['newModule'])

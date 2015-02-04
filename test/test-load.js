@@ -7,4 +7,9 @@ describe('ngbp module', function () {
     var app = require('../app');
     assert(app !== undefined);
   });
+
+  it('can load remove sub-generator', function () {
+    var remove = require('../remove');
+    assert(remove !== undefined);
+  });
 });

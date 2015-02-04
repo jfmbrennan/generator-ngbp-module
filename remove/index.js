@@ -11,10 +11,6 @@ module.exports = yeoman.generators.NamedBase.extend({
   init: function () {
     var pkg = this.fs.readJSON('package.json', {name: 'projectName'});
     this.projectName = pkg.name;
-
-    this.camelModuleName = this._.camelize(this.name);
-    this.modulePath = path.join(this.env.cwd, 'src', 'app', this.camelModuleName);
-    this.moduleFound = fs.existsSync(this.modulePath);
   },
 
   askFor: function () {
@@ -22,27 +18,30 @@ module.exports = yeoman.generators.NamedBase.extend({
 
     var prompts = [
       {
+        name: 'modulePath',
+        message: 'Where is the location of this module?',
+        default: 'app',
+        when: function () {
+          var modulePath = path.join(this.env.cwd, 'src', 'app', this.name);
+          return !fs.existsSync(modulePath);
+        }.bind(this),
+        validate: function (input) {
+          var modulePath = path.join(this.env.cwd, 'src', input, this.name);
+          if (!fs.existsSync(modulePath)) {
+            return "Cannot find the module '" + path.join(input, this.name) + "'";
+          }
+          return true;
+        }.bind(this)
+      }, {
         name: 'remove',
         message: 'Are you sure you want to remove ' + this.name + '?',
         type: 'confirm'
       }
     ];
 
-    if (!this.moduleFound) {
-      prompts.unshift({
-        name: 'modulePath',
-        message: 'Where is the location of this module?',
-        default: 'app'
-      });
-    }
-
     this.prompt(prompts, function (props) {
-      if (props.hasOwnProperty('modulePath')) {
-        this.modulePath = path.join(this.env.cwd, 'src', props.modulePath);
-        if (!fs.existsSync(this.modulePath)) {
-          console.log("error");
-        }
-      }
+      var modulePath = props.hasOwnProperty('modulePath') ? props.modulePath : 'app';
+      this.modulePath = path.join(this.env.cwd, 'src', modulePath);
       this.removeModule = props.remove;
 
       done();
@@ -52,7 +51,7 @@ module.exports = yeoman.generators.NamedBase.extend({
   files: function () {
     fs.removeSync(this.modulePath);
 
-    this._updateAppJs(this.camelModuleName);
+    this._updateAppJs(this.name);
   },
 
   _updateAppJs: function (camelModuleName) {
