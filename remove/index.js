@@ -13,27 +13,20 @@ module.exports = yeoman.generators.NamedBase.extend({
     this.projectName = pkg.name;
   },
 
-  _moduleExists: function (rootPath) {
-    var done = this.async();
-    done(true);
-    //done(fs.existsSync(this._buildModulePath(rootPath)));
-  },
-
-  _buildModulePath: function (rootPath) {
-    rootPath = rootPath || 'app';
-    return path.join(this.env.cwd, 'src', rootPath, this.name);
-  },
-
   askFor: function () {
     var done = this.async();
+
+    var moduleExists = function (rootPath) {
+      return fs.existsSync(this._buildModulePath(rootPath));
+    }.bind(this);
 
     var prompts = [
       {
         name: 'modulePath',
         message: 'Where is the location of this module?',
         default: 'app',
-        when: !this._moduleExists,
-        validate: this._moduleExists
+        when: !moduleExists,
+        validate: moduleExists
       }, {
         name: 'remove',
         message: 'Are you sure you want to remove ' + this.name + '?',
@@ -51,6 +44,11 @@ module.exports = yeoman.generators.NamedBase.extend({
   files: function () {
     fs.removeSync(this.modulePath);
     this._updateAppJs(this.name);
+  },
+
+  _buildModulePath: function (rootPath) {
+    rootPath = rootPath || 'app';
+    return path.join(this.env.cwd, 'src', rootPath, this.name);
   },
 
   _updateAppJs: function (camelModuleName) {
