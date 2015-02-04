@@ -74,11 +74,11 @@ describe('ngbp-module:remove', function () {
       });
   });
 
-  it('prompts user for module location', function (done) {
+  it('accepts custom module location', function (done) {
     runGen.withArguments(['promptModule'])
       .withPrompt({
-        remove: 'Y',
-        modulePath: 'app/subapp'
+        modulePath: 'app/subapp',
+        remove: 'Y'
       })
       .on('ready', function () {
         fs.ensureDirSync('./test/temp/src/app');

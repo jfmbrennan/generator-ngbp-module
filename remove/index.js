@@ -13,6 +13,17 @@ module.exports = yeoman.generators.NamedBase.extend({
     this.projectName = pkg.name;
   },
 
+  _moduleExists: function (rootPath) {
+    var done = this.async();
+    done(true);
+    //done(fs.existsSync(this._buildModulePath(rootPath)));
+  },
+
+  _buildModulePath: function (rootPath) {
+    rootPath = rootPath || 'app';
+    return path.join(this.env.cwd, 'src', rootPath, this.name);
+  },
+
   askFor: function () {
     var done = this.async();
 
@@ -21,17 +32,8 @@ module.exports = yeoman.generators.NamedBase.extend({
         name: 'modulePath',
         message: 'Where is the location of this module?',
         default: 'app',
-        when: function () {
-          var modulePath = path.join(this.env.cwd, 'src', 'app', this.name);
-          return !fs.existsSync(modulePath);
-        }.bind(this),
-        validate: function (input) {
-          var modulePath = path.join(this.env.cwd, 'src', input, this.name);
-          if (!fs.existsSync(modulePath)) {
-            return "Cannot find the module '" + path.join(input, this.name) + "'";
-          }
-          return true;
-        }.bind(this)
+        when: !this._moduleExists,
+        validate: this._moduleExists
       }, {
         name: 'remove',
         message: 'Are you sure you want to remove ' + this.name + '?',
@@ -40,10 +42,8 @@ module.exports = yeoman.generators.NamedBase.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      var moduleRootPath = props.hasOwnProperty('modulePath') ? props.modulePath : 'app';
-      this.modulePath = path.join(this.env.cwd, 'src', moduleRootPath, this.name);
+      this.modulePath = this._buildModulePath(props.modulePath);
       this.removeModule = props.remove;
-
       done();
     }.bind(this));
   },
