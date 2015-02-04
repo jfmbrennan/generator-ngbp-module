@@ -14,12 +14,12 @@ describe('ngbp-module:remove', function () {
       .run(path.join(__dirname, '../remove'))
       .inDir(path.join(__dirname, './temp'))
       .withOptions({ 'skip-install': true })
-      .withArguments(['newModule'])
       .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);
   });
 
   it('remove files', function (done) {
-    runGen.withPrompt({
+    runGen.withArguments(['newModule'])
+      .withPrompt({
         remove: 'Y',
         modulePath: 'app'
       })
@@ -27,7 +27,7 @@ describe('ngbp-module:remove', function () {
         fs.ensureDirSync('./test/temp/src/app');
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['existingModule', 'newModule'])");
         fs.ensureDirSync('./test/temp/src/app/newModule');
-        fs.writeFileSync('./test/temp/src/app/newModule.module.js', "test file removal");
+        fs.writeFileSync('./test/temp/src/app/newModule/newModule.module.js', "test file removal");
       })
       .on('end', function () {
         assert.file([
@@ -41,14 +41,15 @@ describe('ngbp-module:remove', function () {
   });
 
   it('updates app.js', function (done) {
-    runGen.withPrompt({
+    runGen.withArguments(['newModule'])
+      .withPrompt({
         remove: 'Y'
       })
       .on('ready', function () {
         fs.ensureDirSync('./test/temp/src/app');
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['existingModule', 'newModule'])");
         fs.ensureDirSync('./test/temp/src/app/newModule');
-        fs.writeFileSync('./test/temp/src/app/newModule.module.js', "test file removal");
+        fs.writeFileSync('./test/temp/src/app/newModule/newModule.module.js', "test file removal");
       })
       .on('end', function () {
         assert.fileContent('test/temp/src/app/app.js', "angular.module('test', ['existingModule'])");
@@ -57,14 +58,15 @@ describe('ngbp-module:remove', function () {
   });
 
   it('does not update app.js if expected syntax cannot be found', function (done) {
-    runGen.withPrompt({
+    runGen.withArguments(['newModule'])
+      .withPrompt({
         remove: 'Y'
       })
       .on('ready', function () {
         fs.ensureDirSync('./test/temp/src/app');
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test')");
         fs.ensureDirSync('./test/temp/src/app/newModule');
-        fs.writeFileSync('./test/temp/src/app/newModule.module.js', "test file removal");
+        fs.writeFileSync('./test/temp/src/app/newModule/newModule.module.js', "test file removal");
       })
       .on('end', function () {
         assert.fileContent('test/temp/src/app/app.js', "angular.module('test')");
@@ -73,22 +75,23 @@ describe('ngbp-module:remove', function () {
   });
 
   it('prompts user for module location', function (done) {
-    runGen.withPrompt({
+    runGen.withArguments(['promptModule'])
+      .withPrompt({
         remove: 'Y',
         modulePath: 'app/subapp'
       })
       .on('ready', function () {
         fs.ensureDirSync('./test/temp/src/app');
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['existingModule', 'newModule'])");
-        fs.ensureDirSync('./test/temp/src/app/subapp/newModule');
-        fs.writeFileSync('./test/temp/src/app/subapp/newModule.module.js', "test file removal");
+        fs.ensureDirSync('./test/temp/src/app/subapp/promptModule');
+        fs.writeFileSync('./test/temp/src/app/subapp/promptModule/promptModule.module.js', "test file removal");
       })
       .on('end', function () {
         assert.file([
           'test/temp/src/app/app.js'
         ]);
         assert.noFile([
-          'test/temp/src/app/subapp/newModule/newModule.module.js'
+          'test/temp/src/app/subapp/promptModule/promptModule.module.js'
         ]);
         done();
       });
