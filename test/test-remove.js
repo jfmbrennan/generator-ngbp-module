@@ -13,14 +13,15 @@ describe('ngbp-module:remove', function () {
     runGen = helpers
       .run(path.join(__dirname, '../remove'))
       .inDir(path.join(__dirname, './temp'))
+      .withOptions({ 'skip-install': true })
+      .withArguments(['newModule'])
       .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);
   });
 
   it('remove files', function (done) {
-    runGen.withOptions({ 'skip-install': true })
-      .withArguments(['newModule'])
-      .withPrompt({
-        remove: 'Y'
+    runGen.withPrompt({
+        remove: 'Y',
+        modulePath: 'app'
       })
       .on('ready', function () {
         fs.ensureDirSync('./test/temp/src/app');
@@ -40,9 +41,7 @@ describe('ngbp-module:remove', function () {
   });
 
   it('updates app.js', function (done) {
-    runGen.withOptions({ 'skip-install': true })
-      .withArguments(['newModule'])
-      .withPrompt({
+    runGen.withPrompt({
         remove: 'Y'
       })
       .on('ready', function () {
@@ -58,9 +57,7 @@ describe('ngbp-module:remove', function () {
   });
 
   it('does not update app.js if expected syntax cannot be found', function (done) {
-    runGen.withOptions({ 'skip-install': true })
-      .withArguments(['newModule'])
-      .withPrompt({
+    runGen.withPrompt({
         remove: 'Y'
       })
       .on('ready', function () {
@@ -76,9 +73,7 @@ describe('ngbp-module:remove', function () {
   });
 
   it('prompts user for module location', function (done) {
-    runGen.withOptions({ 'skip-install': true })
-      .withArguments(['newModule'])
-      .withPrompt({
+    runGen.withPrompt({
         remove: 'Y',
         modulePath: 'app/subapp'
       })

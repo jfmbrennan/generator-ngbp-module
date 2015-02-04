@@ -40,8 +40,8 @@ module.exports = yeoman.generators.NamedBase.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      var modulePath = props.hasOwnProperty('modulePath') ? props.modulePath : 'app';
-      this.modulePath = path.join(this.env.cwd, 'src', modulePath);
+      var moduleRootPath = props.hasOwnProperty('modulePath') ? props.modulePath : 'app';
+      this.modulePath = path.join(this.env.cwd, 'src', moduleRootPath, this.name);
       this.removeModule = props.remove;
 
       done();
@@ -50,7 +50,6 @@ module.exports = yeoman.generators.NamedBase.extend({
 
   files: function () {
     fs.removeSync(this.modulePath);
-
     this._updateAppJs(this.name);
   },
 
