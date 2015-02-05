@@ -6,23 +6,15 @@
 
 ## Getting Started
 
-### What is Yeoman?
+### Yeoman
 
-Trick question. It's not a thing. It's this guy:
-
-![](http://i.imgur.com/JHaAlBJ.png)
-
-Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
-
-Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
+To install yeoman from npm, run:
 
 ```bash
 npm install -g yo
 ```
 
 ### Yeoman Generators
-
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
 
 To install generator-ngbp-module from npm, run:
 
@@ -42,11 +34,31 @@ You can always reverse this by:
 yo ngbp-module:remove <name>
 ```
 
-### Getting To Know Yeoman
+### Sub Generators
 
-Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
+Create a module controller by: (not implemented yet)
 
-If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
+```bash
+yo ngbp-module:controllers <name>
+```
+
+Create a module directive by: (not implemented yet)
+
+```bash
+yo ngbp-module:directives <name>
+```
+
+Create a module service by: (not implemented yet)
+
+```bash
+yo ngbp-module:services <name>
+```
+
+Create a module filter by: (not implemented yet)
+
+```bash
+yo ngbp-module:filters <name>
+```
 
 
 ## TODO
