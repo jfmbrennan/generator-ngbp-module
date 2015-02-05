@@ -1,6 +1,5 @@
 'use strict';
 var path = require('path');
-var touch = require("touch");
 var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
