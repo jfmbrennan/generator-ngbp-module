@@ -12,4 +12,24 @@ describe('ngbp module', function () {
     var remove = require('../remove');
     assert(remove !== undefined);
   });
+
+  it('can load controllers sub-generator', function () {
+    var controllers = require('../controllers');
+    assert(controllers !== undefined);
+  });
+
+  it('can load filters sub-generator', function () {
+    var filters = require('../filters');
+    assert(filters !== undefined);
+  });
+
+  it('can load directives sub-generator', function () {
+    var directives = require('../directives');
+    assert(directives !== undefined);
+  });
+
+  it('can load services sub-generator', function () {
+    var services = require('../services');
+    assert(services !== undefined);
+  });
 });
