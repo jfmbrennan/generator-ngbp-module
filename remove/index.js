@@ -17,7 +17,9 @@ module.exports = yeoman.generators.NamedBase.extend({
     var done = this.async();
 
     var moduleExists = function (rootPath) {
-      return fs.existsSync(this._buildModulePath(rootPath));
+      rootPath = rootPath || 'app';
+      this.modulePath = path.join(this.env.cwd, 'src', rootPath, this.name);
+      return fs.existsSync(this.modulePath);
     }.bind(this);
 
     var prompts = [
@@ -35,7 +37,7 @@ module.exports = yeoman.generators.NamedBase.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      this.modulePath = this._buildModulePath(props.modulePath);
+      moduleExists(props.modulePath);
       this.removeModule = props.remove;
       done();
     }.bind(this));
@@ -44,11 +46,6 @@ module.exports = yeoman.generators.NamedBase.extend({
   files: function () {
     fs.removeSync(this.modulePath);
     this._updateAppJs(this.name);
-  },
-
-  _buildModulePath: function (rootPath) {
-    rootPath = rootPath || 'app';
-    return path.join(this.env.cwd, 'src', rootPath, this.name);
   },
 
   _updateAppJs: function (camelModuleName) {
