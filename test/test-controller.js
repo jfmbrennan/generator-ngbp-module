@@ -20,17 +20,12 @@ describe('ngbp-module:controllers', function () {
   it('create files', function (done) {
     runGen.withArguments(['newModule'])
       .withPrompt({
-        modulePath: 'app'
-      })
-      .on('ready', function () {
-        fs.ensureDirSync('./test/temp/src/app');
-        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['existingModule', 'newModule'])");
+        modulePath: 'app',
+        customPath: 'controllers'
       })
       .on('end', function () {
         assert.file([
-          'test/temp/src/app/app.js'
-        ]);
-        assert.noFile([ 'test/temp/src/app/newModule/controllers/newModuleCtrl.js'
+          'test/temp/src/app/newModule/controllers/newModuleCtrl.js'
         ]);
         done();
       });

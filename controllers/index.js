@@ -15,35 +15,47 @@ module.exports = yeoman.generators.NamedBase.extend({
   askFor: function () {
     var done = this.async();
 
-    var moduleExists = function (rootPath) {
+    var getModulePath = function (rootPath) {
       rootPath = rootPath || 'app';
-      this.modulePath = path.join(this.env.cwd, 'src', rootPath, this.name);
-      return fs.existsSync(this.modulePath);
+      return path.join(this.env.cwd, 'src', rootPath, this.name);
     }.bind(this);
 
-    var prompts = [
-      {
+    var moduleExists = function (rootPath) {
+      return fs.existsSync(getModulePath(rootPath));
+    };
+
+    var prompts = [];
+
+    if (!moduleExists()) {
+      prompts.push({
         name: 'modulePath',
         message: 'Where is the location of this module?',
         default: 'app',
-        when: !moduleExists,
         validate: moduleExists
-      }
-    ];
+      });
+    }
+
+    prompts.push({
+      name: 'customPath',
+      message: 'Which directory to place controller?',
+      default: 'controllers'
+    });
 
     this.prompt(prompts, function (props) {
-      moduleExists(props.modulePath);
+      this.modulePath = getModulePath(props.modulePath);
+      this.customPath = props.customPath;
       done();
     }.bind(this));
   },
 
   files: function () {
-    this.capitalControllerName = this._.capitalize(this.name);
+    this.capitalModuleName = this._.capitalize(this.name);
+    this.camelModuleName = this._.camelize(this.name);
 
-    var controllerPath = path.join(this.modulePath, 'controllers');
+    var controllerPath = path.join(this.modulePath, this.customPath);
     this.mkdir(controllerPath);
 
-    this.template('_module.controller.js', path.join(controllerPath, this.capitalControllerName + 'Ctrl.js'));
+    this.template('_module.controller.js', path.join(controllerPath, this.camelModuleName + 'Ctrl.js'));
 
   //  this._updateAppJs(this.camelModuleName);
   }//,
