@@ -5,17 +5,16 @@ var fs = require('fs-extra');
 var assert = require('yeoman-generator').assert;
 var helpers = require('yeoman-generator').test;
 
-describe('ngbp-module:app', function () {
+describe('ngbp-module:module', function () {
 
   var runGen;
 
   beforeEach(function () {
     runGen = helpers
-      .run(path.join(__dirname, '../app'))
+      .run(path.join(__dirname, '../module'))
       .inDir(path.join(__dirname, './temp'))
       .withArguments(['newModule'])
       .withPrompt({
-        rootFolder: 'app',
         modules: ['templates', 'uiRouter']
       })
       .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);
