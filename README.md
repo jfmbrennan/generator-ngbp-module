@@ -64,7 +64,4 @@ yo ngbp-module:filters <name>
 ## TODO
 
 * update README to contain more meaningful info
-* add prompt to scaffold controller into separate directory
-* add prompt to scaffold directives into separate directory
-* add prompt to scaffold services into separate directory
-* add prompt to scaffold filters into separate directory
+* add functionality to scaffold out entire app if one does not exist
