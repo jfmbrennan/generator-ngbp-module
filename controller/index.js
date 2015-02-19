@@ -30,8 +30,8 @@ Generator.prototype.askForModule = function askForModuleName() {
 Generator.prototype.createController = function createController() {
   var modulePath = path.join(this.env.cwd, 'src', 'app', this.moduleName);
   this.filePath = path.join(modulePath, 'controllers');
-  this.controllerName = this.name + 'Ctrl.js';
-  this.template('controller.js', path.join(this.filePath, this.controllerName));
+  this.controllerName = this.name + 'Ctrl';
+  this.template('controller.js', path.join(this.filePath, this.controllerName + '.js'));
 };
 
 Generator.prototype.updateControllerWireFile = function updateControllerWireFile() {
