@@ -1,6 +1,7 @@
 'use strict';
 var path = require('path');
 var util = require('util');
+var fse = require('fs-extra');
 var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
@@ -8,6 +9,10 @@ var escodegen = require('escodegen');
 var Generator = module.exports = function Generator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
   this.moduleName = this.args[0];
+  this.camelModuleName = this._.camelize(this.moduleName);
+  this.capitalModuleName = this._.capitalize(this.moduleName);
+  this.lowerModuleName = this.moduleName.toLowerCase();
+  this.modulePath = path.join(this.env.cwd, 'src', 'app', this.moduleName);
 };
 
 util.inherits(Generator, yeoman.generators.Base);
@@ -78,66 +83,132 @@ Generator.prototype.askForScaffolding = function askForScaffolding() {
         value: 'e2e',
         name: 'E2E Tests',
         checked: true
+      }, {
+        value: 'assets',
+        name: 'Image Assets',
+        checked: true
+      }, {
+        value: 'styles',
+        name: 'CSS',
+        checked: true
       }]
     }
   ];
 
   this.prompt(prompts, function (props) {
-    this.moduleScaffolds = this._.flatten(props.scaffold);
+
+    var includeScaffold = function (choice) { 
+      return props.scaffold.indexOf(choice) !== -1; 
+    };
+
+    this.scaffoldController = includeScaffold('controllers');
+    this.scaffoldDirective = includeScaffold('directives');
+    this.scaffoldFilter = includeScaffold('filters');
+    this.scaffoldService = includeScaffold('services');
+    this.scaffoldUnitTest = includeScaffold('unit');
+    this.scaffoldE2eTest = includeScaffold('e2e');
+    this.scaffoldAssets = includeScaffold('assets');
+    this.scaffoldStyles = includeScaffold('styles');
+
     done();
   }.bind(this));
 };
 
 Generator.prototype.writeModuleFiles = function writeModuleFiles() {
-  this._.forEach(this.moduleScaffolds, function (scaffold) {
-    this.composeWith('ngbp-module:' + scaffold, {
-      args: this.args,
-      options: this.options
-    });
-    this.includeModules.push('\'' + this.moduleName + '.' + scaffold + '.js\'');
-  }.bind(this));
+
+  if (this.scaffoldController) {
+    var controllerTemplate = this._createTemplateFile(
+      '_module.controllers.js',
+      '.controllers.js',
+      'controllers'
+    ); 
+    this.includeModules.push('\'' + controllerTemplate + '\'');
+  }
+
+  if (this.scaffoldDirective) {
+    var directiveTemplate = this._createTemplateFile(
+      '_module.directives.js',
+      '.directives.js',
+      'directives'
+    ); 
+    this.includeModules.push('\'' + directiveTemplate + '\'');
+    this.mkdir(path.join(this.modulePath, 'directives', 'partials'));
+  }
+
+  if (this.scaffoldFilter) {
+    var filterTemplate = this._createTemplateFile(
+      '_module.filters.js',
+      '.filters.js',
+      'filters'
+    ); 
+    this.includeModules.push('\'' + filterTemplate + '\'');
+  }
+
+  if (this.scaffoldService) {
+    var serviceTemplate = this._createTemplateFile(
+      '_module.services.js',
+      '.services.js',
+      'services'
+    ); 
+    this.includeModules.push('\'' + serviceTemplate + '\'');
+  }
+
+  if (this.scaffoldUnitTest) {
+    this._createTemplateFile(
+      '_module.spec.js',
+      '.spec.js',
+      'unit'
+    ); 
+  }
+
+  if (this.scaffoldE2eTest) {
+    this._createTemplateFile(
+      '_module.e2e.js',
+      '.e2e.js',
+      'e2e'
+    ); 
+  }
+
+  if (this.scaffoldAssets) {
+    this.mkdir(path.join(this.modulePath, 'assets'));
+  }
+
+  if (this.scaffoldStyles) {
+    this.mkdir(path.join(this.modulePath, 'styles'));
+  }
 
   if (this.includeModules.length) {
     this.moduleDependencies = '\n    ' + this.includeModules.join(',\n    ') + '\n  ';
   }
 
+  this._createTemplateFile(
+    '_module.tpl.html',
+    '.tpl.html',
+    'partials'
+  ); 
 
-  this.camelModuleName = this._.camelize(this.moduleName);
-  this.capitalModuleName = this._.capitalize(this.moduleName);
-  this.lowerModuleName = this.moduleName.toLowerCase();
-  var modulePath = path.join(this.env.cwd, 'src', 'app', this.camelModuleName);
-  var viewPath = path.join(modulePath, 'partials');
+  this._createTemplateFile(
+    '_module.module.js',
+    '.module.js'
+  ); 
 
-  this.mkdir(modulePath);
-  this.mkdir(viewPath);
-
-  this.template("_module.module.js", path.join(modulePath, this.camelModuleName + '.module.js'));
-  this.template('_module.tpl.html', path.join(viewPath, this.camelModuleName + '.tpl.html'));
-
-//  this._processDirectory('module', '');
   this._updateAppJs(this.camelModuleName);
 };
 
-  /*
-  _processDirectory: function (source, destination) {
-    var root = this.isPathAbsolute(source) ? source : path.join(this.sourceRoot(), source);
-    var files = this.expandFiles('**', { dot: true, cwd: root });
+Generator.prototype._createTemplateFile = function _createTemplateFile(src, destSuffix, templatePath) {
+  templatePath = templatePath || '.';
+  var filePath = path.join(this.modulePath, templatePath);
+  var source = path.join(templatePath, src);
+  var destFileName = this.moduleName + destSuffix;
+  var destination = path.join(filePath, destFileName);
 
-    for (var i = 0; i < files.length; i++) {
-      var f = files[i];
-      var src = path.join(root, f);
-      if (path.basename(f).indexOf('_') == 0) {
-        var dest = path.join(destination, path.dirname(f), path.basename(f).replace(/^_/, ''));
-        this.template(src, dest);
-      }
-      else {
-        var dest = path.join(destination, f);
-        this.copy(src, dest);
-      }
-    }
-  },*/
+  this.mkdir(filePath);
+  this.template(source, destination);
+  return destFileName;
+};
 
 Generator.prototype._updateAppJs = function _updateAppJs(camelModuleName) {
+  var module, newFile;
   var filePath = path.join(this.env.cwd, 'src', 'app', 'app.js');
   var file = this.readFileAsString(filePath);
   var start = file.indexOf('[');
@@ -149,8 +220,11 @@ Generator.prototype._updateAppJs = function _updateAppJs(camelModuleName) {
 
   var substr = file.substring(start, end + 1);
   var parsed = esprima.parse(substr);
-  var module = esprima.parse("'" + camelModuleName + "'");
-  parsed.body[0].expression.elements.push(module.body[0].expression);
-  var newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
-  this.writeFileFromString(newFile, filePath);
+
+  if (!this._.find(parsed.body[0].expression.elements, { 'value': camelModuleName })) {
+    module = esprima.parse("'" + camelModuleName + "'");
+    parsed.body[0].expression.elements.push(module.body[0].expression);
+    newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
+    this.writeFileFromString(newFile, filePath);
+  }
 };
