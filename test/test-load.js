@@ -8,6 +8,11 @@ describe('ngbp module', function () {
     assert(app !== undefined);
   });
 
+  it('can load module sub-generator', function () {
+    var module = require('../module');
+    assert(module !== undefined);
+  });
+
   it('can load remove sub-generator', function () {
     var remove = require('../remove');
     assert(remove !== undefined);
