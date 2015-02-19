@@ -13,6 +13,11 @@ describe('ngbp module', function () {
     assert(module !== undefined);
   });
 
+  it('can load controller sub-generator', function () {
+    var controller = require('../controller');
+    assert(controller !== undefined);
+  });
+
   it('can load remove sub-generator', function () {
     var remove = require('../remove');
     assert(remove !== undefined);
