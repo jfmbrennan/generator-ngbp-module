@@ -16,7 +16,7 @@ describe('ngbp-module:module', function () {
       .withArguments(['newModule'])
       .withPrompt({
         modules: ['templates', 'uiRouter'],
-        scaffold: ['controllers']
+        scaffold: ['controllers', 'directives', 'filters', 'services', 'assets', 'styles', 'unit', 'e2e']
       })
       .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);
   });
@@ -30,7 +30,13 @@ describe('ngbp-module:module', function () {
       .on('end', function () {
         assert.file([
           'test/temp/src/app/app.js',
-          'test/temp/src/app/newModule/newModule.module.js'
+          'test/temp/src/app/newModule/newModule.module.js',
+          'test/temp/src/app/newModule/controllers/newModule.controllers.js',
+          'test/temp/src/app/newModule/directives/newModule.directives.js',
+          'test/temp/src/app/newModule/filters/newModule.filters.js',
+          'test/temp/src/app/newModule/services/newModule.services.js',
+          'test/temp/src/app/newModule/unit/newModule.spec.js',
+          'test/temp/src/app/newModule/e2e/newModule.e2e.js'
         ]);
         done();
       });
