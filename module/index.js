@@ -8,7 +8,7 @@ var escodegen = require('escodegen');
 
 var Generator = module.exports = function Generator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
-  this.moduleName = this.args[0];
+  this.argument('moduleName', {type: String, required: true});
   this.camelModuleName = this._.camelize(this.moduleName);
   this.capitalModuleName = this._.capitalize(this.moduleName);
   this.lowerModuleName = this.moduleName.toLowerCase();
@@ -193,6 +193,10 @@ Generator.prototype.writeModuleFiles = function writeModuleFiles() {
   ); 
 
   this._updateAppJs(this.camelModuleName);
+
+  var existingModules = this.config.get('modules') || [];
+  existingModules.push(this.moduleName);
+  this.config.set('modules', this._.uniq(existingModules));
 };
 
 Generator.prototype._createTemplateFile = function _createTemplateFile(src, destSuffix, templatePath) {
