@@ -15,8 +15,7 @@ describe('ngbp-module:module', function () {
       .inDir(path.join(__dirname, './temp'))
       .withArguments(['newModule'])
       .withPrompt({
-        modules: ['templates', 'uiRouter'],
-        scaffold: ['controllers', 'directives', 'filters', 'services', 'assets', 'styles', 'unit', 'e2e']
+        modules: ['templates', 'uiRouter']
       })
       .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);
   });
