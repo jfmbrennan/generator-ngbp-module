@@ -9,6 +9,7 @@ var escodegen = require('escodegen');
 var Generator = module.exports = function Generator() {
   yeoman.generators.Base.apply(this, arguments);
   this.argument('name', {type: String, required: true});
+  this.capitalModuleName = this._.capitalize(this.name);
   this.existingModules = this.config.get('modules');
 };
 
@@ -30,7 +31,8 @@ Generator.prototype.askForModule = function askForModuleName() {
 Generator.prototype.createController = function createController() {
   var modulePath = path.join(this.env.cwd, 'src', 'app', this.moduleName);
   this.filePath = path.join(modulePath, 'controllers');
-  this.controllerName = this.name + 'Ctrl';
+  this.controllerName = this.capitalModuleName + 'Ctrl';
+  this.controllerModuleName = this.moduleName + '.controllers.' + this.controllerName;
   this.template('controller.js', path.join(this.filePath, this.controllerName + '.js'));
 };
 
@@ -49,7 +51,7 @@ Generator.prototype.updateControllerWireFile = function updateControllerWireFile
   var parsed = esprima.parse(substr);
 
   if (!this._.find(parsed.body[0].expression.elements, { 'value': this.controllerName })) {
-    module = esprima.parse("'" + this.controllerName + "'");
+    module = esprima.parse("'" + this.controllerModuleName + "'");
     parsed.body[0].expression.elements.push(module.body[0].expression);
     newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
     this.writeFileFromString(newFile, fileName);
