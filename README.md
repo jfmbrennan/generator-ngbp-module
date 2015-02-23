@@ -36,28 +36,28 @@ yo ngbp-module:remove <name>
 
 ### Sub Generators
 
-Create a module controller by: (not implemented yet)
+Create a module controller by:
 
 ```bash
-yo ngbp-module:controllers <name>
+yo ngbp-module:controller <name>
 ```
 
 Create a module directive by: (not implemented yet)
 
 ```bash
-yo ngbp-module:directives <name>
+yo ngbp-module:directive <name>
 ```
 
 Create a module service by: (not implemented yet)
 
 ```bash
-yo ngbp-module:services <name>
+yo ngbp-module:service <name>
 ```
 
 Create a module filter by: (not implemented yet)
 
 ```bash
-yo ngbp-module:filters <name>
+yo ngbp-module:filter <name>
 ```
 
 
@@ -65,3 +65,4 @@ yo ngbp-module:filters <name>
 
 * update README to contain more meaningful info
 * add functionality to scaffold out entire app if one does not exist
+* track sub-generators created in modules by adding info to .yo-rc.json file

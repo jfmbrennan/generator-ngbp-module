@@ -24,7 +24,7 @@ describe('ngbp-module:controller', function () {
     runGen.withOptions({ 'skip-install': true })
       .on('ready', function () {
         fs.ensureDirSync('./test/temp/src/app/newModule/controllers');
-        fs.writeFileSync('./test/temp/src/app/newModule/controllers/newModule.controllers.js', "angular.module('newModule.controllers', ['ExistingCtrl'])");
+        fs.writeFileSync('./test/temp/src/app/newModule/controllers/newModule.controllers.js', "angular.module('newModule.controllers', ['newModule.controllers.ExistingCtrl'])");
       })
       .on('end', function () {
         assert.file([
@@ -38,10 +38,10 @@ describe('ngbp-module:controller', function () {
     runGen.withOptions({ 'skip-install': true })
       .on('ready', function () {
         fs.ensureDirSync('./test/temp/src/app/newModule/controllers');
-        fs.writeFileSync('./test/temp/src/app/newModule/controllers/newModule.controllers.js', "angular.module('newModule.controllers', ['ExistingCtrl'])");
+        fs.writeFileSync('./test/temp/src/app/newModule/controllers/newModule.controllers.js', "angular.module('newModule.controllers', ['newModule.controllers.ExistingCtrl'])");
       })
       .on('end', function () {
-        assert.fileContent('test/temp/src/app/newModule/controllers/newModule.controllers.js', "angular.module('newModule.controllers', [\n    'ExistingCtrl',\n    'TestCtrl'\n])");
+        assert.fileContent('test/temp/src/app/newModule/controllers/newModule.controllers.js', "angular.module('newModule.controllers', [\n    'newModule.controllers.ExistingCtrl',\n    'newModule.controllers.TestCtrl'\n])");
         done();
       });
   });
