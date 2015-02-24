@@ -1,5 +1,5 @@
 /* */
-angular.module('<%= controllerModuleName %>', [])
-  .controller('<%= controllerName %>', function <%= controllerName %>($scope) {
+angular.module('<%= namespace %>', [])
+  .controller('<%= filename %>', function <%= filename %>($scope) {
 
   });
