@@ -11,8 +11,6 @@ var Generator = module.exports = function Generator() {
   this.argument('name', {type: String, required: true});
   this.capitalName = this._.capitalize(this.name);
   this.existingModules = this.config.get('modules');
-  
-  this.fileExt = '.js';
 };
 
 util.inherits(Generator, yeoman.generators.Base);
@@ -33,6 +31,7 @@ Generator.prototype.selectModuleFromConfig = function (type) {
 
 Generator.prototype.createTemplateFile = function (source, destination, options) {
   options = this._.assign({
+    fileExt: '.js',
     suffix: '',
     skipAdd: false,
     namespace: '.' + destination + '.',
@@ -42,7 +41,7 @@ Generator.prototype.createTemplateFile = function (source, destination, options)
   this.filename = this.capitalName + options.suffix;
   this.namespace = this.moduleName + options.namespace + this.filename;
 
-  var destfile = path.join(this.modulePath, destination, this.filename + this.fileExt);
+  var destfile = path.join(this.modulePath, destination, this.filename + options.fileExt);
 
   this.template(source, destfile);
 
