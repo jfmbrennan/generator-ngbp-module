@@ -13,6 +13,7 @@ var Generator = module.exports = function Generator(args, options) {
   this.capitalModuleName = this._.capitalize(this.moduleName);
   this.lowerModuleName = this.moduleName.toLowerCase();
   this.modulePath = path.join(this.env.cwd, 'src', 'app', this.moduleName);
+  this.projectName = this.config.get('name');
 };
 
 util.inherits(Generator, yeoman.generators.Base);
@@ -93,8 +94,9 @@ Generator.prototype.updateAppJs = function updateAppJs() {
   var module, newFile;
   var filePath = path.join(this.env.cwd, 'src', 'app', 'app.js');
   var file = this.readFileAsString(filePath);
-  var start = file.indexOf('[');
-  var end = file.indexOf(']');
+  var startMarker = file.indexOf('.module(') + 8;
+  var start = file.indexOf('[', startMarker);
+  var end = file.indexOf(']', start);
 
   if (!file || start === -1 || end === -1) {
     return false;
@@ -103,8 +105,15 @@ Generator.prototype.updateAppJs = function updateAppJs() {
   var substr = file.substring(start, end + 1);
   var parsed = esprima.parse(substr);
 
-  if (!this._.find(parsed.body[0].expression.elements, { 'value': this.camelModuleName })) {
-    module = esprima.parse("'" + this.camelModuleName + "'");
+  if (!this.projectName) {
+    var endName = file.indexOf(',', startMarker);
+    this.projectName = file.substring(startMarker + 1, endName - 1);
+  }
+
+  var moduleName = this.projectName + '.' + this.camelModuleName;
+
+  if (!this._.find(parsed.body[0].expression.elements, { 'value': moduleName })) {
+    module = esprima.parse("'" + moduleName + "'");
     parsed.body[0].expression.elements.push(module.body[0].expression);
     newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
     this.writeFileFromString(newFile, filePath);
@@ -115,5 +124,9 @@ Generator.prototype.updateConfig = function updateConfig() {
   var existingModules = this.config.get('modules') || [];
   existingModules.push(this.moduleName);
   this.config.set('modules', this._.uniq(existingModules));
+
+  if (this.config.get('name') !== this.projectName) {
+    this.config.set('name', this.projectName);
+  }
 };
 

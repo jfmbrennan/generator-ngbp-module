@@ -24,7 +24,7 @@ describe('ngbp-module:module', function () {
     runGen.withOptions({ 'skip-install': true })
       .on('ready', function () {
         fs.ensureDirSync('./test/temp/src/app');
-        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['existingModule'])");
+        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['test.existingModule'])");
       })
       .on('end', function () {
         assert.file([
@@ -45,10 +45,10 @@ describe('ngbp-module:module', function () {
     runGen.withOptions({ 'skip-install': true })
       .on('ready', function () {
         fs.ensureDirSync('./test/temp/src/app');
-        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['existingModule'])");
+        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['test.existingModule'])");
       })
       .on('end', function () {
-        assert.fileContent('test/temp/src/app/app.js', "angular.module('test', [\n    'existingModule',\n    'newModule'\n])");
+        assert.fileContent('test/temp/src/app/app.js', "angular.module('test', [\n    'test.existingModule',\n    'test.newModule'\n])");
         done();
       });
   });
