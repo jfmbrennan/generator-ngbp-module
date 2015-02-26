@@ -42,19 +42,19 @@ Create a module controller by:
 yo ngbp-module:controller <name>
 ```
 
-Create a module directive by: (not implemented yet)
+Create a module directive by:
 
 ```bash
 yo ngbp-module:directive <name>
 ```
 
-Create a module service by: (not implemented yet)
+Create a module service by:
 
 ```bash
 yo ngbp-module:service <name>
 ```
 
-Create a module filter by: (not implemented yet)
+Create a module filter by:
 
 ```bash
 yo ngbp-module:filter <name>
@@ -65,4 +65,5 @@ yo ngbp-module:filter <name>
 
 * update README to contain more meaningful info
 * add functionality to scaffold out entire app if one does not exist
-* track sub-generators created in modules by adding info to .yo-rc.json file
+* scaffold .less file for each module and wire it up by appending to main.less
+
