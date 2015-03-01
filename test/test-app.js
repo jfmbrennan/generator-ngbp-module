@@ -14,16 +14,21 @@ describe('ngbp-module:app', function () {
       .run(path.join(__dirname, '../app'))
       .inDir(path.join(__dirname, './temp'))
       .withArguments(['newModule'])
+      .withOptions({ 'skip-install': true })
       .withPrompt({
         modules: ['templates', 'uiRouter']
       })
-      .withGenerators(['../../module', [helpers.createDummyGenerator(), 'mocha:app']]);
+      .withGenerators(['../../module', [helpers.createDummyGenerator(), 'mocha:app']])
+      .on('ready', function () {
+        fs.ensureDirSync('./test/temp/src/app');
+        fs.ensureDirSync('./test/temp/src/less');
+        fs.writeFileSync('./test/temp/src/less/main.less', '@include("test.less");\n');
+      })
   });
 
   it('creates files', function (done) {
     runGen.withOptions({ 'skip-install': true })
       .on('ready', function () {
-        fs.ensureDirSync('./test/temp/src/app');
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['test.existingModule'])");
       })
       .on('end', function () {
@@ -44,7 +49,6 @@ describe('ngbp-module:app', function () {
   it('updates app.js', function (done) {
     runGen.withOptions({ 'skip-install': true })
       .on('ready', function () {
-        fs.ensureDirSync('./test/temp/src/app');
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['test.existingModule'])");
       })
       .on('end', function () {
@@ -56,7 +60,6 @@ describe('ngbp-module:app', function () {
   it('does not update app.js if expected syntax cannot be found', function (done) {
     runGen.withOptions({ 'skip-install': true })
       .on('ready', function () {
-        fs.ensureDirSync('./test/temp/src/app');
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test')");
       })
       .on('end', function () {
