@@ -24,16 +24,6 @@ describe('ngbp-module:module', function () {
         fs.ensureDirSync('./test/temp/src/less');
         fs.writeFileSync('./test/temp/src/less/main.less', '@include("test.less");\n');
       });
-/*    runGen.localConfig = {
-      "generator-generator": {},
-      "generator-ngbp-module": {
-        "modules": [
-          "newModule"
-        ],
-        "name": "tenrkvbehrst"
-      }
-    };*/
-    //helpers.mockLocalConfig(runGen, {name: 'tesiiiit'});
   });
 
   it('creates files', function (done) {
@@ -67,12 +57,23 @@ describe('ngbp-module:module', function () {
 
   it('does not update app.js if expected syntax cannot be found', function (done) {
     runGen.on('ready', function () {
-        fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test')");
-      })
-      .on('end', function () {
-        assert.fileContent('test/temp/src/app/app.js', "angular.module('test')");
-        done();
-      });
+      fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test')");
+    })
+    .on('end', function () {
+      assert.fileContent('test/temp/src/app/app.js', "angular.module('test')");
+      done();
+    });
+  });
+
+  it('gets projectName from app.js if it does not exist', function (done) {
+    runGen.on('ready', function () {
+      this.generator.projectName = null;
+      fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('other', ['test.existingModule'])");
+    })
+    .on('end', function () {
+      assert.fileContent('test/temp/src/app/app.js', "angular.module('other', [\n    'test.existingModule',\n    'other.newModule'\n])");
+      done();
+    });
   });
 
 });
