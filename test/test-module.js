@@ -23,12 +23,21 @@ describe('ngbp-module:module', function () {
         fs.ensureDirSync('./test/temp/src/app');
         fs.ensureDirSync('./test/temp/src/less');
         fs.writeFileSync('./test/temp/src/less/main.less', '@include("test.less");\n');
-      })
+      });
+/*    runGen.localConfig = {
+      "generator-generator": {},
+      "generator-ngbp-module": {
+        "modules": [
+          "newModule"
+        ],
+        "name": "tenrkvbehrst"
+      }
+    };*/
+    //helpers.mockLocalConfig(runGen, {name: 'tesiiiit'});
   });
 
   it('creates files', function (done) {
-    runGen.withOptions({ 'skip-install': true })
-      .on('ready', function () {
+    runGen.on('ready', function () {
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['test.existingModule'])");
       })
       .on('end', function () {
@@ -47,8 +56,7 @@ describe('ngbp-module:module', function () {
   });
 
   it('updates app.js', function (done) {
-    runGen.withOptions({ 'skip-install': true })
-      .on('ready', function () {
+    runGen.on('ready', function () {
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test', ['test.existingModule'])");
       })
       .on('end', function () {
@@ -58,8 +66,7 @@ describe('ngbp-module:module', function () {
   });
 
   it('does not update app.js if expected syntax cannot be found', function (done) {
-    runGen.withOptions({ 'skip-install': true })
-      .on('ready', function () {
+    runGen.on('ready', function () {
         fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('test')");
       })
       .on('end', function () {
