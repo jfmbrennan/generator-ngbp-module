@@ -4,6 +4,7 @@ var path = require('path');
 var fs = require('fs-extra');
 var assert = require('yeoman-generator').assert;
 var helpers = require('yeoman-generator').test;
+var sinon = require('sinon');
 
 describe('ngbp-module:module', function () {
 
@@ -68,6 +69,7 @@ describe('ngbp-module:module', function () {
   it('gets projectName from app.js if it does not exist', function (done) {
     runGen.on('ready', function () {
       this.generator.projectName = null;
+      this.generator.config.set = sinon.stub().returns(function () {});
       fs.writeFileSync('./test/temp/src/app/app.js', "angular.module('other', ['test.existingModule'])");
     })
     .on('end', function () {
