@@ -65,5 +65,3 @@ yo ngbp-module:filter <name>
 
 * update README to contain more meaningful info
 * add functionality to scaffold out entire app if one does not exist
-* scaffold .less file for each module and wire it up by appending to main.less
-
