@@ -12,7 +12,7 @@ Generator.prototype.promptModuleName = function promptModuleName() {
   this.selectModuleFromConfig('service');
 };
 
-Generator.prototype.createFilter = function createFilter() {
+Generator.prototype.createService = function createService() {
   this.createTemplateFile('service.js', 'services');
 };
 

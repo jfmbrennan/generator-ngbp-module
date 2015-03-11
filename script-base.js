@@ -1,7 +1,6 @@
 'use strict';
 var path = require('path');
 var util = require('util');
-var fs = require('fs-extra');
 var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
