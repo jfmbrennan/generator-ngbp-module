@@ -36,13 +36,15 @@ Generator.prototype.writeAppFiles = function writeAppFiles() {
     var files = this.expandFiles('**', { dot: true, cwd: this.templatePath() });
 
     for (var i = 0; i < files.length; i++) {
+      var dest;
       var f = files[i];
       var src = path.join(this.templatePath(), f);
       if (path.basename(f).indexOf('_') == 0) {
-          var dest = path.join(path.dirname(f), path.basename(f).replace(/^_/, ''));
+          dest = path.join(this.env.cwd, path.dirname(f), path.basename(f).replace(/^_/, ''));
           this.template(src, dest);
       } else {
-          this.copy(src, f);
+          dest = path.join(this.env.cwd, f);
+          this.copy(src, dest);
       }
     }
   }
