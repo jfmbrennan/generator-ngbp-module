@@ -21,7 +21,13 @@ describe('ngbp-module:build', function () {
   it('creates project files', function (done) {
     runGen.on('end', function () {
       assert.file([
-        'test/temp/bower.json'
+        'test/temp/bower.json',
+        'test/temp/Gruntfile.js',
+        'test/temp/package.json',
+        'test/temp/README.md',
+        'test/temp/src/app/app.js',
+        'test/temp/src/less/style.css',
+        'test/temp/src/less/main.less'
       ]);
       done();
     });
