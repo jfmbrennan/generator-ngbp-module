@@ -8,6 +8,8 @@ var Generator = module.exports = function Generator(args, options) {
   this.argument('appname', {type: String, required: false});
   this.appname = this.appname || path.basename(process.cwd());
   this.initApp = options.init;
+  this.banner = options.banner ?
+    this.readFileAsString(path.join(this.env.cwd, options.banner)) : "";
 };
 
 util.inherits(Generator, yeoman.generators.Base);
@@ -53,5 +55,6 @@ Generator.prototype.writeAppFiles = function writeAppFiles() {
 Generator.prototype.updateConfig = function updateConfig() {
   if (this.initApp) {
     this.config.set('name', this.appname);
+    this.config.set('banner', this.banner);
   }
 };
