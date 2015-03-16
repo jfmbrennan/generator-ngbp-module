@@ -34,10 +34,10 @@ describe('ngbp-module:build', function () {
   });
 
   it('accepts banner file as optional input', function (done) {
+
     runGen.withOptions({banner: 'banner.test'})
-      .on('ready', function () {
-        fs.ensureDirSync('./test/temp');
-        fs.writeFileSync('./test/temp/banner.test', "/**\n * Banner Test\n */");
+      .inDir(path.join(__dirname, './temp'), function (dir) {
+        fs.writeFileSync(path.join(dir, 'banner.test'), "/**\n * Banner Test\n */");
       })
       .on('end', function () {
         assert.fileContent('test/temp/src/app/app.js', /^\/\*\*\n\s\*\sBanner\sTest\n\s\*\//);
