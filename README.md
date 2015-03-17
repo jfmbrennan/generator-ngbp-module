@@ -1,37 +1,42 @@
 # generator-ngbp-module 
 [![tests](https://secure.travis-ci.org/jfmbrennan/generator-ngbp-module.png?branch=master)](https://travis-ci.org/jfmbrennan/generator-ngbp-module) [![dependencies](https://david-dm.org/jfmbrennan/generator-ngbp-module.svg)](https://david-dm.org/jfmbrennan/generator-ngbp-module) [![Coverage Status](https://coveralls.io/repos/jfmbrennan/generator-ngbp-module/badge.svg?branch=master)](https://coveralls.io/r/jfmbrennan/generator-ngbp-module?branch=master)
 
-> [Yeoman](http://yeoman.io) generator
-
 
 ## Getting Started
 
-### Yeoman
+### Yeoman - Install prerequisites
 
-To install yeoman from npm, run:
+To install yeoman and the ngbp-module generator from npm, run:
 
 ```bash
-npm install -g yo
+npm install -g yo generator-ngbp-module
 ```
 
-### Yeoman Generators
-
-To install generator-ngbp-module from npm, run:
+### Create a new Angular Project
+If you are creating a project from the start - create a new directory, make it your current working directory and scaffold out your initial app using this generator or just use the following...
 
 ```bash
-npm install -g generator-ngbp-module
+mkdir <appname> && cd $_
+yo ngbp-module
 ```
 
-Finally, create the module <name>:
+Pass `--init` as an option to force the initialization of a new app. This should be used with caution as this may overwrite existing files.
+
+Use `--banner=<bannerfile>` to specify a file which contains the string to be used as a banner in scaffolded files. This string is stored as config variable `banner` in `.yo-rc.json` file in project root directory.
+
+
+### Create a new Angular Module
+
+Create the module <modulename> using...
 
 ```bash
-yo ngbp-module <name>
+yo ngbp-module <modulename>
 ```
 
 You can always reverse this by:
 
 ```bash
-yo ngbp-module:remove <name>
+yo ngbp-module:remove <modulename>
 ```
 
 ### Sub Generators
@@ -39,29 +44,29 @@ yo ngbp-module:remove <name>
 Create a module controller by:
 
 ```bash
-yo ngbp-module:controller <name>
+yo ngbp-module:controller <controllername>
 ```
 
 Create a module directive by:
 
 ```bash
-yo ngbp-module:directive <name>
+yo ngbp-module:directive <directivename>
 ```
 
 Create a module service by:
 
 ```bash
-yo ngbp-module:service <name>
+yo ngbp-module:service <servicename>
 ```
 
 Create a module filter by:
 
 ```bash
-yo ngbp-module:filter <name>
+yo ngbp-module:filter <filtername>
 ```
 
 
 ## TODO
 
 * update README to contain more meaningful info
-* add functionality to scaffold out entire app if one does not exist
+* add nbgp-module:config to add/update project config variables
