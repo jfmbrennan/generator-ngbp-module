@@ -14,13 +14,6 @@ var Generator = module.exports = function Generator(args, options) {
     required: false
   });
 
-  this.option('banner', {
-    desc: 'Specify banner template file',
-    type: String,
-    defaults: false,
-    required: false
-  });
-
   this.initApp = this.options.init || !packageJsonExists;
 };
 
