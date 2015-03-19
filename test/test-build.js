@@ -40,7 +40,7 @@ describe('ngbp-module:build', function () {
         fs.writeFileSync(path.join(dir, 'banner.test'), "/**\n * Banner Test\n */");
       })
       .on('end', function () {
-        assert.fileContent('test/temp/src/app/app.js', /^\/\*\*\n\s\*\sBanner\sTest\n\s\*\//);
+        assert.fileContent('.yo-rc.json', /\/\*\*\\n\s\*\sBanner\sTest\\n\s\*\//);
         done();
       });
   });
