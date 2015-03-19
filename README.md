@@ -51,4 +51,27 @@ Create a module filter by:
 ```bash
 yo ngbp-module:filter <filtername>
 ```
+### What you get
 
+Scaffolds out a complete angular module structure for you:
+
+    example/
+	├── assets/
+	├── controllers/
+	│   └── example.controllers.js
+	├── directives/
+	│   ├── partials/
+	│   └── example.directives.js
+	├── e2e/
+	│   └── example.e2e.js
+	├── filters/
+	│   └── example.filters.js
+	├── services/
+	│   └── example.services.js
+	├── styles/
+	│   └── example.less
+	├── unit/
+	│   └── example.spec.js
+	├── partials/
+	│   └── example.tpl.html
+	└── example.module.js
