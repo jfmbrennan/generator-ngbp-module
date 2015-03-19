@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="ngbp" ng-controller="AppCtrl">
+<head lang="en">
+  <!--<base href="/admin/"/>-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <!--<link rel="shortcut icon" type="image/png" href="assets/img/favicon.ico">-->
+
+  <!-- compiled CSS -->
+  <% styles.forEach( function ( file ) { %>
+  <link rel="stylesheet" type="text/css" href="<%= file %>"/>
+  <% }); %>
+  <title ng-bind="pageTitle"></title>
+</head>
+<body ui-view>
+  <!--app code here-->
+
+  <!-- compiled JavaScript -->
+  <% scripts.forEach( function ( file ) { %>
+  <script type="text/javascript" src="<%= file %>"></script>
+  <% }); %>
+</body>
+</html>

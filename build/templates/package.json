@@ -1,8 +1,8 @@
 {
-  "author": "",
-  "name": "",
+  "author": "Antonio Aguilar",
+  "name": "ngbp",
   "version": "0.0.1",
-  "homepage": "",
+  "homepage": "https://github.com/antonioaguilar/ngbp",
   "licenses": {
     "type": "",
     "url": ""
@@ -10,7 +10,7 @@
   "bugs": "",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com/antonioaguilar/ngbp"
   },
   "dependencies": {},
   "devDependencies": {

@@ -1,0 +1,13 @@
+.DS_Store
+.idea/
+.dpd/
+npm-debug.log
+tmp/
+build/
+public/
+data/
+production/
+vendor/
+node_modules/
+coverage/
+backend/
