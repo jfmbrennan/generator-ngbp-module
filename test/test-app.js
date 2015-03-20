@@ -72,4 +72,28 @@ describe('ngbp-module:app', function () {
 
   });
 
+  describe('which uses ngbp-module:build', function () {
+
+    var runGen;
+
+    beforeEach(function () {
+      runGen = helpers
+        .run(path.join(__dirname, '../app'))
+        .inDir(path.join(__dirname, './temp'))
+        .withArguments(['test'])
+        .withOptions({ 'skip-install': true, 'init': true })
+        .withGenerators(['../../build', [helpers.createDummyGenerator(), 'mocha:app']]);
+    });
+
+    it('creates project files', function (done) {
+      runGen.on('end', function () {
+          assert.file([
+            'test/temp/bower.json'
+          ]);
+          done();
+        });
+    });
+
+  });
+
 });
