@@ -18,6 +18,21 @@ describe('ngbp module', function () {
     assert(controller !== undefined);
   });
 
+  it('can load directive sub-generator', function () {
+    var directive = require('../directive');
+    assert(directive !== undefined);
+  });
+
+  it('can load filter sub-generator', function () {
+    var filter = require('../filter');
+    assert(filter !== undefined);
+  });
+
+  it('can load service sub-generator', function () {
+    var service = require('../service');
+    assert(service !== undefined);
+  });
+
   it('can load remove sub-generator', function () {
     var remove = require('../remove');
     assert(remove !== undefined);

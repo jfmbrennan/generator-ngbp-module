@@ -12,19 +12,6 @@ To install yeoman and the ngbp-module generator from npm, run:
 npm install -g yo generator-ngbp-module
 ```
 
-### Create a new Angular Project
-If you are creating a project from the start - create a new directory, make it your current working directory and scaffold out your initial app using this generator or just use the following...
-
-```bash
-mkdir <appname> && cd $_
-yo ngbp-module
-```
-
-Pass `--init` as an option to force the initialization of a new app. This should be used with caution as this may overwrite existing files.
-
-Use `--banner=<bannerfile>` to specify a file which contains the string to be used as a banner in scaffolded files. This string is stored as config variable `banner` in `.yo-rc.json` file in project root directory.
-
-
 ### Create a new Angular Module
 
 Create the module <modulename> using...
@@ -64,9 +51,27 @@ Create a module filter by:
 ```bash
 yo ngbp-module:filter <filtername>
 ```
+### What you get
 
+Scaffolds out a complete angular module structure for you:
 
-## TODO
-
-* update README to contain more meaningful info
-* add nbgp-module:config to add/update project config variables
+    example/
+	├── assets/
+	├── controllers/
+	│   └── example.controllers.js
+	├── directives/
+	│   ├── partials/
+	│   └── example.directives.js
+	├── e2e/
+	│   └── example.e2e.js
+	├── filters/
+	│   └── example.filters.js
+	├── services/
+	│   └── example.services.js
+	├── styles/
+	│   └── example.less
+	├── unit/
+	│   └── example.spec.js
+	├── partials/
+	│   └── example.tpl.html
+	└── example.module.js
