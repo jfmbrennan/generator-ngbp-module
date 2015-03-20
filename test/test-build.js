@@ -26,7 +26,6 @@ describe('ngbp-module:build', function () {
         'test/temp/package.json',
         'test/temp/README.md',
         'test/temp/src/app/app.js',
-        'test/temp/src/less/style.css',
         'test/temp/src/less/main.less'
       ]);
       done();
