@@ -24,7 +24,7 @@ Generator.prototype.initializeApp = function initializeApp() {
     this.composeWith('ngbp-module:build', {
       args: this.args,
       options: this.options
-    });
+    }, {link: true});
   }
 };
 
@@ -33,6 +33,6 @@ Generator.prototype.composeWithModule = function composeWithModule() {
     this.composeWith('ngbp-module:module', {
       args: this.args,
       options: this.options
-    });
+    }, {link: true});
   }
 };

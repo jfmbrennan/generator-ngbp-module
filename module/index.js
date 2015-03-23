@@ -1,6 +1,7 @@
 'use strict';
 var path = require('path');
 var util = require('util');
+var chalk = require('chalk');
 var fse = require('fs-extra');
 var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
@@ -16,6 +17,15 @@ var Generator = module.exports = function Generator(args, options) {
   this.modulePath = path.join(this.env.cwd, 'src', 'app', this.moduleName);
   this.projectName = this.config.get('name');
   this.appModuleName = this.projectName + '.' + this.camelModuleName;
+
+  this.on('end', function () {
+    var message = '\nTest out the module by running ';
+    message += chalk.bold.yellow('grunt watch');
+    message += ' in the console.\nBrowse to ';
+    message += chalk.bold.cyan('http://localhost:9000/#/' + this.moduleName);
+    message += ' to view the newly created module.';
+    console.log(message);
+  });
 };
 
 util.inherits(Generator, yeoman.generators.Base);

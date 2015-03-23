@@ -1,6 +1,8 @@
 'use strict';
 var util = require('util');
 var path = require('path');
+var chalk = require('chalk');
+var format = require('dateformat');
 var yeoman = require('yeoman-generator');
 
 var Generator = module.exports = function Generator(args, options) {
@@ -8,8 +10,10 @@ var Generator = module.exports = function Generator(args, options) {
   this.argument('appname', {type: String, required: false});
   this.appname = this.appname || path.basename(process.cwd());
   this.initApp = options.init;
+  this.skipInstall = options['skip-install'] || false,
   this.banner = options.banner ?
     this.readFileAsString(path.join(this.env.cwd, options.banner)) : "";
+  this.date = format(new Date(), 'dS mmmm yyyy');
 };
 
 util.inherits(Generator, yeoman.generators.Base);
@@ -57,4 +61,16 @@ Generator.prototype.updateConfig = function updateConfig() {
     this.config.set('name', this.appname);
     this.config.set('banner', this.banner);
   }
+};
+
+Generator.prototype.installDeps = function installDeps() {
+  this.installDependencies({
+    skipInstall: this.skipInstall,
+    callback: function () {
+      var message = '\n\nReady to create a new module.\nStart by using ';
+      message += chalk.bold.yellow('yo ngbp-module <modulename>');  
+      message += ' to scaffold your first ngbp module';
+      console.log(message);
+    }
+  });
 };
