@@ -20,6 +20,34 @@ mkdir <appname> && cd $_
 yo ngbp-module
 ```
 
+which scaffolds out a complete angular app structure for you:
+
+    ./
+	├── karma/
+	│   └── karma-unit.tpl.js
+	├── src/
+	│   ├── app/
+	│	│	├── app.js
+	│   │   └── app.spec.js
+	│   ├── less/
+	│	│	├── bootswatch.less
+	│	│	├── main.less
+	│	│	├── style.css
+	│   │   └── variables.less
+	│   └── index.html
+	├── .bowerrc
+	├── .editorconfig
+	├── .gitignore
+	├── .jshintrc
+	├── .yo-rc.json
+	├── CHANGELOG.md
+	├── Gruntfile.js
+	├── ProtractorConfig.js
+	├── README.md
+	├── bower.json
+	├── package.json
+	└── vendor.config.js
+
 Pass `--init` as an option to force the initialization of a new app. This should be used with caution as this may overwrite existing files.
 
 Use `--banner=<bannerfile>` to specify a file which contains the string to be used as a banner in scaffolded files. This string is stored as config variable `banner` in `.yo-rc.json` file in project root directory.
@@ -33,11 +61,36 @@ Create the module <modulename> using...
 yo ngbp-module <modulename>
 ```
 
+which scaffolds out a complete angular module structure for you:
+
+    example/
+	├── assets/
+	├── controllers/
+	│   └── example.controllers.js
+	├── directives/
+	│   ├── partials/
+	│   └── example.directives.js
+	├── e2e/
+	│   └── example.e2e.js
+	├── filters/
+	│   └── example.filters.js
+	├── services/
+	│   └── example.services.js
+	├── styles/
+	│   └── example.less
+	├── unit/
+	│   └── example.spec.js
+	├── partials/
+	│   └── example.tpl.html
+	└── example.module.js
+
+
 You can always reverse this by:
 
 ```bash
 yo ngbp-module:remove <modulename>
 ```
+
 
 ### Sub Generators
 
@@ -64,27 +117,9 @@ Create a module filter by:
 ```bash
 yo ngbp-module:filter <filtername>
 ```
-### What you get
 
-Scaffolds out a complete angular module structure for you:
+##TODO
 
-    example/
-	├── assets/
-	├── controllers/
-	│   └── example.controllers.js
-	├── directives/
-	│   ├── partials/
-	│   └── example.directives.js
-	├── e2e/
-	│   └── example.e2e.js
-	├── filters/
-	│   └── example.filters.js
-	├── services/
-	│   └── example.services.js
-	├── styles/
-	│   └── example.less
-	├── unit/
-	│   └── example.spec.js
-	├── partials/
-	│   └── example.tpl.html
-	└── example.module.js
+ * Update Gruntfile scaffold to include banner
+ * Add optional modules (util, template caching, etc) to scaffold during app build
+ * Include option to use select from list of bootstrap templates during app build
