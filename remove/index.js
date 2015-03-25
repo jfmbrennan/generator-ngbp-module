@@ -1,7 +1,6 @@
 'use strict';
 var fs = require('fs-extra');
 var path = require('path');
-var touch = require("touch");
 var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
@@ -68,7 +67,7 @@ module.exports = yeoman.generators.NamedBase.extend({
 
     var substr = file.substring(start, end + 1);
     var parsed = esprima.parse(substr);
-    var module = esprima.parse("'" + camelModuleName + "'");
+    var module = esprima.parse('\'' + camelModuleName + '\'');
 
     this._.remove(parsed.body[0].expression.elements, function (val) {
       return this.isEqual(val, module.body[0].expression);

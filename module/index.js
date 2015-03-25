@@ -7,7 +7,7 @@ var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
 
-var Generator = module.exports = function Generator(args, options) {
+var Generator = module.exports = function Generator() {
   yeoman.generators.Base.apply(this, arguments);
   this.argument('moduleName', {type: String, required: true});
   this.camelModuleName = this._.camelize(this.moduleName);
@@ -35,9 +35,9 @@ Generator.prototype.askForModules = function askForModules() {
 
   var prompts = [
     {
-      type: "checkbox",
-      name: "modules",
-      message: "Please select module's dependencies?",
+      type: 'checkbox',
+      name: 'modules',
+      message: 'Please select module\'s dependencies?',
       choices: [{
         value: ['\'templates-app\'', '\'templates-common\''],
         name: 'Template Caching',
@@ -65,21 +65,21 @@ Generator.prototype.askForModules = function askForModules() {
 };
 
 Generator.prototype.writeModuleFiles = function writeModuleFiles() {
-  this._createModuleFile('_module.controllers.js', 'controllers'); 
-  this._createModuleFile('_module.directives.js', 'directives'); 
-  this._createModuleFile('_module.filters.js', 'filters'); 
-  this._createModuleFile('_module.services.js', 'services'); 
-  this._createModuleFile('_module.spec.js', 'unit', {suffix: '.spec.js', include: false}); 
-  this._createModuleFile('_module.e2e.js', 'e2e', {include: false}); 
-  this._createModuleFile('_module.less', 'styles', {suffix: '.less', include: false}); 
-  this._createModuleFile('_module.tpl.html', 'partials', {suffix: '.tpl.html', include: false}); 
+  this._createModuleFile('_module.controllers.js', 'controllers');
+  this._createModuleFile('_module.directives.js', 'directives');
+  this._createModuleFile('_module.filters.js', 'filters');
+  this._createModuleFile('_module.services.js', 'services');
+  this._createModuleFile('_module.spec.js', 'unit', {suffix: '.spec.js', include: false});
+  this._createModuleFile('_module.e2e.js', 'e2e', {include: false});
+  this._createModuleFile('_module.less', 'styles', {suffix: '.less', include: false});
+  this._createModuleFile('_module.tpl.html', 'partials', {suffix: '.tpl.html', include: false});
 
   this.mkdir(path.join(this.modulePath, 'directives', 'partials'));
   this.mkdir(path.join(this.modulePath, 'assets'));
 };
 
 Generator.prototype.updateAppJs = function updateAppJs() {
-  var module, newFile;
+  var module, newFile, substr, parsed, endName;
   var filePath = path.join(this.env.cwd, 'src', 'app', 'app.js');
   var file = this.readFileAsString(filePath);
   var startMarker = file.indexOf('.module(') + 8;
@@ -90,11 +90,11 @@ Generator.prototype.updateAppJs = function updateAppJs() {
     return false;
   }
 
-  var substr = file.substring(start, end + 1);
-  var parsed = esprima.parse(substr);
+  substr = file.substring(start, end + 1);
+  parsed = esprima.parse(substr);
 
   if (!this.projectName) {
-    var endName = file.indexOf(',', startMarker);
+    endName = file.indexOf(',', startMarker);
     this.projectName = file.substring(startMarker + 1, endName - 1);
     this.appModuleName = this.projectName + '.' + this.camelModuleName;
   }
@@ -113,7 +113,6 @@ Generator.prototype.createModuleJs = function createModuleJs() {
 };
 
 Generator.prototype.updateMainLess = function updateMainLess() {
-  var module, newFile;
   var filePath = path.join(this.env.cwd, 'src', 'less', 'main.less');
   var lessPath = path.join('..', 'app', this.moduleName, 'styles', this.moduleName + '.less');
   var includeLess = '@import "' + lessPath + '";\n';
@@ -145,6 +144,6 @@ Generator.prototype._createModuleFile = function _createModuleFile(src, dest, op
   this.template(source, destination);
 
   if (options.include) {
-    this.includeModules.push(this._.quote(this.moduleName + '.' + dest, "'"));
+    this.includeModules.push(this._.quote(this.moduleName + '.' + dest, '\''));
   }
 };

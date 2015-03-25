@@ -87,11 +87,11 @@ describe('ngbp-module:app', function () {
 
     it('creates project files', function (done) {
       runGen.on('end', function () {
-          assert.file([
-            'test/temp/bower.json'
-          ]);
-          done();
-        });
+        assert.file([
+          'test/temp/bower.json'
+        ]);
+        done();
+      });
     });
 
   });
