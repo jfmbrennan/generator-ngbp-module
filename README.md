@@ -27,12 +27,12 @@ which scaffolds out a complete angular app structure for you:
 	│   └── karma-unit.tpl.js
 	├── src/
 	│   ├── app/
-	│	│	├── app.js
+	│   │   ├── app.js
 	│   │   └── app.spec.js
 	│   ├── less/
-	│	│	├── bootswatch.less
-	│	│	├── main.less
-	│	│	├── style.css
+	│   │   ├── bootswatch.less
+	│   │   ├── main.less
+	│   │   ├── style.css
 	│   │   └── variables.less
 	│   └── index.html
 	├── .bowerrc
@@ -63,7 +63,7 @@ yo ngbp-module <modulename>
 
 which scaffolds out a complete angular module structure for you:
 
-    example/
+    src/app/example/
 	├── assets/
 	├── controllers/
 	│   └── example.controllers.js
@@ -92,34 +92,95 @@ yo ngbp-module:remove <modulename>
 ```
 
 
-### Sub Generators
+### Controllers
 
 Create a module controller by:
 
 ```bash
-yo ngbp-module:controller <controllername>
+yo ngbp-module:controller test
 ```
+
+which creates the following files
+
+```bash
+
+src/app/example/
+├── controllers/
+│   └── TestCtrl.js
+└── unit/
+    └── TestCtrl.spec.js
+	
+```
+and updates `src/app/example/controllers/example.controllers.js` to include the newly created Controller as a dependency
+
+
+### Directives
 
 Create a module directive by:
 
 ```bash
-yo ngbp-module:directive <directivename>
+yo ngbp-module:directive test
 ```
+
+which creates the following files
+
+```bash
+
+src/app/example/
+├── directives/
+│   └── Test.js
+└── unit/
+    └── Test.spec.js
+	
+```
+and updates `src/app/example/directives/example.directives.js` to include the newly created Directive as a dependency
+
+### Services
 
 Create a module service by:
 
 ```bash
-yo ngbp-module:service <servicename>
+yo ngbp-module:service test
 ```
+
+which creates the following files
+
+```bash
+
+src/app/example/
+├── services/
+│   └── Test.js
+└── unit/
+    └── Test.spec.js
+	
+```
+and updates `src/app/example/services/example.services.js` to include the newly created Service as a dependency
+
+### Filters
 
 Create a module filter by:
 
 ```bash
-yo ngbp-module:filter <filtername>
+yo ngbp-module:filter test
 ```
+
+which creates the following files
+
+```bash
+
+src/app/example/
+├── filters/
+│   └── Test.js
+└── unit/
+    └── Test.spec.js
+	
+```
+and updates `src/app/example/filters/example.filters.js` to include the newly created Filter as a dependency
+
 
 ##TODO
 
  * Update Gruntfile scaffold to include banner
+ * Prevent Filename clashing with directive, service and filter unit test files
  * Add optional modules (util, template caching, etc) to scaffold during app build
- * Include option to use select from list of bootstrap templates during app build
+ * Include option to use select from list of bootstrap templates during app build	
