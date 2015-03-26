@@ -1,10 +1,9 @@
 'use strict';
 var util = require('util');
-var path = require('path');
 var fs = require('fs-extra');
 var yeoman = require('yeoman-generator');
 
-var Generator = module.exports = function Generator(args, options) {
+var Generator = module.exports = function Generator() {
   yeoman.generators.Base.apply(this, arguments);
   var packageJsonExists = fs.existsSync(this.destinationPath('package.json'));
 

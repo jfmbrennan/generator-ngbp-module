@@ -17,11 +17,11 @@ util.inherits(Generator, yeoman.generators.Base);
 Generator.prototype.selectModuleFromConfig = function (type) {
   var done = this.async();
   this.prompt({
-      type: "list",
-      name: "moduleName",
-      message: "Select which module to place new " + type,
-      choices: this.existingModules
-    }, function (props) {
+    type: 'list',
+    name: 'moduleName',
+    message: 'Select which module to place new ' + type,
+    choices: this.existingModules
+  }, function (props) {
     this.moduleName = props.moduleName;
     this.modulePath = path.join(this.env.cwd, 'src', 'app', this.moduleName);
     done();
@@ -50,7 +50,7 @@ Generator.prototype.createTemplateFile = function (source, destination, options)
 };
 
 Generator.prototype.addModuleToWireFile = function (destination, filename) {
-  var module, newFile;
+  var module, newFile, substr, parsed;
   var filepath = path.join(this.modulePath, destination, filename);
   var file = this.readFileAsString(filepath);
   var start = file.indexOf('[');
@@ -60,18 +60,18 @@ Generator.prototype.addModuleToWireFile = function (destination, filename) {
     return false;
   }
 
-  var substr = file.substring(start, end + 1);
-  var parsed = esprima.parse(substr);
+  substr = file.substring(start, end + 1);
+  parsed = esprima.parse(substr);
 
   if (!this._.find(parsed.body[0].expression.elements, { 'value': this.namespace })) {
-    module = esprima.parse("'" + this.namespace + "'");
+    module = esprima.parse('\'' + this.namespace + '\'');
     parsed.body[0].expression.elements.push(module.body[0].expression);
     newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
     this.writeFileFromString(newFile, filepath);
   }
 };
 
-Generator.prototype.createUnitTest = function (destination) {
+Generator.prototype.createUnitTest = function () {
   var unitFilename = this.filename + '.spec.js';
   var unitFilepath = path.join(this.modulePath, 'unit', unitFilename);
   this.template('unit.js', unitFilepath);

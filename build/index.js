@@ -10,9 +10,9 @@ var Generator = module.exports = function Generator(args, options) {
   this.argument('appname', {type: String, required: false});
   this.appname = this.appname || path.basename(process.cwd());
   this.initApp = options.init;
-  this.skipInstall = options['skip-install'] || false,
+  this.skipInstall = options['skip-install'] || false;
   this.banner = options.banner ?
-    this.readFileAsString(path.join(this.env.cwd, options.banner)) : "";
+    this.readFileAsString(path.join(this.env.cwd, options.banner)) : '';
   this.date = format(new Date(), 'dS mmmm yyyy');
 };
 
@@ -23,9 +23,9 @@ Generator.prototype.askForModules = function askForModules() {
     var done = this.async();
 
     var prompts = {
-      type: "confirm",
-      name: "createProject",
-      message: "Cannot find package.json. Do you want to scaffold a new app?"
+      type: 'confirm',
+      name: 'createProject',
+      message: 'Cannot find package.json. Do you want to scaffold a new app?'
     };
 
     this.prompt(prompts, function (props) {
@@ -45,7 +45,7 @@ Generator.prototype.writeAppFiles = function writeAppFiles() {
       var dest;
       var f = files[i];
       var src = path.join(this.templatePath(), f);
-      if (path.basename(f).indexOf('_') == 0) {
+      if (path.basename(f).indexOf('_') === 0) {
           dest = path.join(this.env.cwd, path.dirname(f), path.basename(f).replace(/^_/, ''));
           this.template(src, dest);
       } else {
