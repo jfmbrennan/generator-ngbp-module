@@ -67,9 +67,9 @@ Generator.prototype.installDeps = function installDeps() {
   this.installDependencies({
     skipInstall: this.skipInstall,
     callback: function () {
-      var message = '\n\nReady to create a new module.\nStart by using ';
+      var message = '\n\nAlthough you have created a new app, it still won\'t do much.\nThe next step is to ';
       message += chalk.bold.yellow('yo ngbp-module <modulename>');  
-      message += ' to scaffold your first ngbp module';
+      message += ' to create a usable ngbp module';
       console.log(message);
     }
   });
