@@ -184,3 +184,4 @@ and updates `src/app/example/filters/example.filters.js` to include the newly cr
  * Prevent Filename clashing with directive, service and filter unit test files
  * Add optional modules (util, template caching, etc) to scaffold during app build
  * Include option to use select from list of bootstrap templates during app build	
+ * Add licence file
