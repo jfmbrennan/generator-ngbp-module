@@ -130,7 +130,7 @@ src/app/example/
 ├── directives/
 │   └── Test.js
 └── unit/
-    └── Test.spec.js
+    └── Test.directive.spec.js
 	
 ```
 and updates `src/app/example/directives/example.directives.js` to include the newly created Directive as a dependency
@@ -151,7 +151,7 @@ src/app/example/
 ├── services/
 │   └── Test.js
 └── unit/
-    └── Test.spec.js
+    └── Test.service.spec.js
 	
 ```
 and updates `src/app/example/services/example.services.js` to include the newly created Service as a dependency
@@ -172,7 +172,7 @@ src/app/example/
 ├── filters/
 │   └── Test.js
 └── unit/
-    └── Test.spec.js
+    └── Test.filter.spec.js
 	
 ```
 and updates `src/app/example/filters/example.filters.js` to include the newly created Filter as a dependency

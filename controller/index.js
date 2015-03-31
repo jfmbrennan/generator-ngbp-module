@@ -17,5 +17,5 @@ Generator.prototype.createControllerFile = function createControllerFile() {
 };
 
 Generator.prototype.createControllerUnitTest = function createControllerUnitTest() {
-  this.createUnitTest('controller.js', 'controllers', {suffix: 'Ctrl'});
+  this.createUnitTest();
 };
