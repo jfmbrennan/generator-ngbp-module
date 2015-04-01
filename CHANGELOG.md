@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.2.5 (2015-04-01)
+
+### Bug Fixes
+
+- Fixed "Issue Remove 'HomeCtrl' from app.js" [#2](https://github.com/jfmbrennan/generator-ngbp-module/issues/2)
+- Fixed unit test file name clashing by adding sub generator type to unit test filename
+
+### Features
+
+- Added CHANGELOG.md
+- Added LICENSE
+
+
 ## v0.2.4 (2015-03-30)
 
 ### Features
@@ -19,7 +32,7 @@
 
 ### Bug Fixes
 
-- Added `{link: true}` as option when calling `composeWith` function to prevent possible EventEmitter memory leak. Fixes [Could not create a new Angular project in MacOS #1](https://github.com/jfmbrennan/generator-ngbp-module/issues/1) 
+- Added `{link: true}` as option when calling `composeWith` function to prevent possible EventEmitter memory leak. Fixes "Could not create a new Angular project in MacOS" [#1](https://github.com/jfmbrennan/generator-ngbp-module/issues/1) 
 
 ### Features
 
