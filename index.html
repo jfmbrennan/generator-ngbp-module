@@ -155,7 +155,7 @@ src/app/example/
 ├── directives/
 │   └── Test.js
 └── unit/
-    └── Test.spec.js
+    └── Test.directive.spec.js
 </pre></div>
 
 <p>and updates <code>src/app/example/directives/example.directives.js</code> to include the newly created Directive as a dependency</p>
@@ -174,7 +174,7 @@ src/app/example/
 ├── services/
 │   └── Test.js
 └── unit/
-    └── Test.spec.js
+    └── Test.service.spec.js
 </pre></div>
 
 <p>and updates <code>src/app/example/services/example.services.js</code> to include the newly created Service as a dependency</p>
@@ -193,7 +193,7 @@ src/app/example/
 ├── filters/
 │   └── Test.js
 └── unit/
-    └── Test.spec.js
+    └── Test.filter.spec.js
 </pre></div>
 
 <p>and updates <code>src/app/example/filters/example.filters.js</code> to include the newly created Filter as a dependency</p>
@@ -203,11 +203,14 @@ src/app/example/
 
 <ul>
 <li>Update Gruntfile scaffold to include banner</li>
-<li>Prevent Filename clashing with directive, service and filter unit test files</li>
 <li>Add optional modules (util, template caching, etc) to scaffold during app build</li>
-<li>Include option to use select from list of bootstrap templates during app build<br>
-</li>
+<li>Include option to use select from list of bootstrap templates during app build</li>
 </ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright (c) 2015 John Brennan - <a href="https://github.com/jfmbrennan/generator-ngbp-module/blob/master/LICENSE">MIT</a> license.</p>
       </section>
     </div>
 
