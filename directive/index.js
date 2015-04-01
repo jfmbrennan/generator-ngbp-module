@@ -12,10 +12,10 @@ Generator.prototype.promptModuleName = function promptModuleName() {
   this.selectModuleFromConfig('directive');
 };
 
-Generator.prototype.createFilter = function createFilter() {
+Generator.prototype.createDirectiveFile = function createDirectiveFile() {
   this.createTemplateFile('directive.js', 'directives');
 };
 
 Generator.prototype.createDirectiveUnitTest = function createDirectiveUnitTest() {
-  this.createUnitTest('directive.js', 'directives');
+  this.createUnitTest('.directive');
 };

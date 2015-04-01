@@ -71,8 +71,9 @@ Generator.prototype.addModuleToWireFile = function (destination, filename) {
   }
 };
 
-Generator.prototype.createUnitTest = function () {
-  var unitFilename = this.filename + '.spec.js';
+Generator.prototype.createUnitTest = function (namespace) {
+  namespace = namespace || '';
+  var unitFilename = this.filename + namespace + '.spec.js';
   var unitFilepath = path.join(this.modulePath, 'unit', unitFilename);
   this.template('unit.js', unitFilepath);
 };

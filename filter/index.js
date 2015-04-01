@@ -12,6 +12,10 @@ Generator.prototype.promptModuleName = function promptModuleName() {
   this.selectModuleFromConfig('filter');
 };
 
-Generator.prototype.createFilter = function createFilter() {
+Generator.prototype.createFilterFile = function createFilterFile() {
   this.createTemplateFile('filter.js', 'filters');
+};
+
+Generator.prototype.createFilterUnitTest = function createFilterUnitTest() {
+  this.createUnitTest('.filter');
 };

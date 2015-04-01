@@ -3,22 +3,16 @@
  */
 
 angular.module('ngbp', [
-
-  // html templates
-  'templates-app', 'templates-common',
-
-  // vendor dependencies
-  'ui.router', 'ngResource', 'ngCookies',
-
-  // modules, controllers and services
-  'HomeCtrl'
+  'templates-app',
+  'templates-common',
+  'ui.router',
+  'ngResource',
+  'ngCookies'
 ])
 
 .config(function myAppConfig ($locationProvider, $httpProvider, $sceDelegateProvider, $logProvider, $urlRouterProvider) {
 
   $logProvider.debugEnabled(true);
-
-  $urlRouterProvider.otherwise('/home');
 
 })
 
