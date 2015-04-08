@@ -1,6 +1,7 @@
 'use strict';
 var util = require('util');
 var path = require('path');
+var glob = require('glob');
 var chalk = require('chalk');
 var format = require('dateformat');
 var yeoman = require('yeoman-generator');
@@ -39,7 +40,7 @@ Generator.prototype.askForModules = function askForModules() {
 Generator.prototype.writeAppFiles = function writeAppFiles() {
   if (this.initApp) {
 
-    var files = this.expandFiles('**', { dot: true, cwd: this.templatePath() });
+    var files = glob.sync('**', { dot: true, nodir: true, cwd: this.templatePath() });
 
     for (var i = 0; i < files.length; i++) {
       var dest;

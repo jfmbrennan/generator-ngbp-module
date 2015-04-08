@@ -58,7 +58,7 @@ Use `--banner=<bannerfile>` to specify a file which contains the string to be us
 Create the module <modulename> using...
 
 ```bash
-yo ngbp-module <modulename>
+yo ngbp-module example
 ```
 
 which scaffolds out a complete angular module structure for you:
@@ -88,7 +88,7 @@ which scaffolds out a complete angular module structure for you:
 You can always reverse this by:
 
 ```bash
-yo ngbp-module:remove <modulename>
+yo ngbp-module:remove example
 ```
 
 

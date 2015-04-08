@@ -4,6 +4,7 @@ var path = require('path');
 var util = require('util');
 var chalk = require('chalk');
 var fse = require('fs-extra');
+var mkdirp = require('mkdirp');
 var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
@@ -75,8 +76,8 @@ Generator.prototype.writeModuleFiles = function writeModuleFiles() {
   this._createModuleFile('_module.less', 'styles', {suffix: '.less', include: false});
   this._createModuleFile('_module.tpl.html', 'partials', {suffix: '.tpl.html', include: false});
 
-  this.mkdir(path.join(this.modulePath, 'directives', 'partials'));
-  this.mkdir(path.join(this.modulePath, 'assets'));
+  mkdirp.sync(path.join(this.modulePath, 'directives', 'partials'));
+  mkdirp.sync(path.join(this.modulePath, 'assets'));
 };
 
 Generator.prototype.updateAppJs = function updateAppJs() {
@@ -141,7 +142,7 @@ Generator.prototype._createModuleFile = function _createModuleFile(src, dest, op
   var destFileName = this.moduleName + options.suffix;
   var destination = path.join(filePath, destFileName);
 
-  this.mkdir(filePath);
+  mkdirp.sync(filePath);
   this.template(source, destination);
 
   if (options.include) {
