@@ -1,4 +1,5 @@
 'use strict';
+var _ = require('lodash');
 var path = require('path');
 var util = require('util');
 var yeoman = require('yeoman-generator');
@@ -8,7 +9,7 @@ var escodegen = require('escodegen');
 var Generator = module.exports = function Generator() {
   yeoman.generators.Base.apply(this, arguments);
   this.argument('name', {type: String, required: true});
-  this.capitalName = this._.capitalize(this.name);
+  this.capitalName = _.capitalize(this.name);
   this.existingModules = this.config.get('modules');
 };
 
@@ -29,7 +30,7 @@ Generator.prototype.selectModuleFromConfig = function (type) {
 };
 
 Generator.prototype.createTemplateFile = function (source, destination, options) {
-  options = this._.assign({
+  options = _.assign({
     fileExt: '.js',
     suffix: '',
     skipAdd: false,
@@ -63,7 +64,7 @@ Generator.prototype.addModuleToWireFile = function (destination, filename) {
   substr = file.substring(start, end + 1);
   parsed = esprima.parse(substr);
 
-  if (!this._.find(parsed.body[0].expression.elements, { 'value': this.namespace })) {
+  if (!_.find(parsed.body[0].expression.elements, { 'value': this.namespace })) {
     module = esprima.parse('\'' + this.namespace + '\'');
     parsed.body[0].expression.elements.push(module.body[0].expression);
     newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
