@@ -27,7 +27,7 @@ var Generator = module.exports = function Generator() {
     message += ' in the console.\nBrowse to ';
     message += chalk.bold.cyan('http://localhost:9000/#/' + this.moduleName);
     message += ' to view the newly created module.';
-    console.log(message);
+    this.log(message);
   });
 };
 

@@ -72,7 +72,7 @@ Generator.prototype.installDeps = function installDeps() {
       var message = '\n\nAlthough you have created a new app, it still won\'t do much.\nThe next step is to ';
       message += chalk.bold.yellow('yo ngbp-module <modulename>');  
       message += ' to create a usable ngbp module';
-      console.log(message);
-    }
+      this.log(message);
+    }.bind(this)
   });
 };
