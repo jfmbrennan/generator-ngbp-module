@@ -178,11 +178,9 @@ src/app/example/
 and updates `src/app/example/filters/example.filters.js` to include the newly created Filter as a dependency
 
 
-##TODO
+## Roadmap
 
- * Update Gruntfile scaffold to include banner
- * Add optional modules (util, template caching, etc) to scaffold during app build
- * Include option to use select from list of bootstrap templates during app build
+All features, improvements and bugs are being tracked on the Trello Board [Ngbp-module](https://trello.com/b/s7P0zM5Y/ngbp-module).
 
 ## License
 

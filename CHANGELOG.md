@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.2.6 (2015-04-09)
+
+### Bug Fixes
+
+- Replaced references to deprecated "withPrompt" with "withPrompts"
+- Replaced deprecated underscore.string with lodash
+- Replaced deprecated mkdir with mkdirp
+- Replaced deprecated this.readFileAsString() with require("html-wiring").readFileAsString()
+- Replaced deprecated this.writeFileAsString() with require("html-wiring").writeFileAsString()
+- Replaced deprecated expandFiles() and expand() with glob module methods.
+- Replaced console.log with generator.log
+
+### Features
+- Bump version of `fs-extra` to `0.18.0`
+- Bump version of `yeoman-generator` to `0.19.1`
+- 
+
 ## v0.2.5 (2015-04-01)
 
 ### Bug Fixes
