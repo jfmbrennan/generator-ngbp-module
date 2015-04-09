@@ -14,7 +14,7 @@ describe('ngbp-module:directive', function () {
       .run(path.join(__dirname, '../directive'))
       .inDir(path.join(__dirname, './temp'))
       .withArguments(['Test'])
-      .withPrompt({
+      .withPrompts({
         moduleName: 'newModule'
       })
       .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);
