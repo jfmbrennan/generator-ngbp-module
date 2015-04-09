@@ -5,6 +5,7 @@ var util = require('util');
 var chalk = require('chalk');
 var fse = require('fs-extra');
 var mkdirp = require('mkdirp');
+var wiring = require('html-wiring');
 var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
@@ -83,7 +84,7 @@ Generator.prototype.writeModuleFiles = function writeModuleFiles() {
 Generator.prototype.updateAppJs = function updateAppJs() {
   var module, newFile, substr, parsed, endName;
   var filePath = path.join(this.env.cwd, 'src', 'app', 'app.js');
-  var file = this.readFileAsString(filePath);
+  var file = wiring.readFileAsString(filePath);
   var startMarker = file.indexOf('.module(') + 8;
   var start = file.indexOf('[', startMarker);
   var end = file.indexOf(']', start);
@@ -105,7 +106,7 @@ Generator.prototype.updateAppJs = function updateAppJs() {
     module = esprima.parse('"' + this.appModuleName + '"');
     parsed.body[0].expression.elements.push(module.body[0].expression);
     newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
-    this.writeFileFromString(newFile, filePath);
+    wiring.writeFileFromString(newFile, filePath);
   }
 };
 

@@ -4,6 +4,7 @@ var path = require('path');
 var glob = require('glob');
 var chalk = require('chalk');
 var format = require('dateformat');
+var wiring = require('html-wiring');
 var yeoman = require('yeoman-generator');
 
 var Generator = module.exports = function Generator(args, options) {
@@ -13,7 +14,7 @@ var Generator = module.exports = function Generator(args, options) {
   this.initApp = options.init;
   this.skipInstall = options['skip-install'] || false;
   this.banner = options.banner ?
-    this.readFileAsString(path.join(this.env.cwd, options.banner)) : '';
+    wiring.readFileAsString(path.join(this.env.cwd, options.banner)) : '';
   this.date = format(new Date(), 'dS mmmm yyyy');
 };
 
