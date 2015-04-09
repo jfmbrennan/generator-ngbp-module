@@ -1,8 +1,11 @@
 'use strict';
+var _ = require('lodash');
 var path = require('path');
 var util = require('util');
 var chalk = require('chalk');
 var fse = require('fs-extra');
+var mkdirp = require('mkdirp');
+var wiring = require('html-wiring');
 var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
@@ -10,9 +13,9 @@ var escodegen = require('escodegen');
 var Generator = module.exports = function Generator() {
   yeoman.generators.Base.apply(this, arguments);
   this.argument('moduleName', {type: String, required: true});
-  this.camelModuleName = this._.camelize(this.moduleName);
-  this.capitalModuleName = this._.capitalize(this.moduleName);
-  this.slugifyModuleName = this._.slugify(this.moduleName);
+  this.camelModuleName = _.camelCase(this.moduleName);
+  this.capitalModuleName = _.capitalize(this.moduleName);
+  this.kebabModuleName = _.kebabCase(this.moduleName);
   this.lowerModuleName = this.moduleName.toLowerCase();
   this.modulePath = path.join(this.env.cwd, 'src', 'app', this.moduleName);
   this.projectName = this.config.get('name');
@@ -24,7 +27,7 @@ var Generator = module.exports = function Generator() {
     message += ' in the console.\nBrowse to ';
     message += chalk.bold.cyan('http://localhost:9000/#/' + this.moduleName);
     message += ' to view the newly created module.';
-    console.log(message);
+    this.log(message);
   });
 };
 
@@ -59,7 +62,7 @@ Generator.prototype.askForModules = function askForModules() {
   ];
 
   this.prompt(prompts, function (props) {
-    this.includeModules = this._.flatten(props.modules);
+    this.includeModules = _.flatten(props.modules);
     done();
   }.bind(this));
 };
@@ -74,14 +77,14 @@ Generator.prototype.writeModuleFiles = function writeModuleFiles() {
   this._createModuleFile('_module.less', 'styles', {suffix: '.less', include: false});
   this._createModuleFile('_module.tpl.html', 'partials', {suffix: '.tpl.html', include: false});
 
-  this.mkdir(path.join(this.modulePath, 'directives', 'partials'));
-  this.mkdir(path.join(this.modulePath, 'assets'));
+  mkdirp.sync(path.join(this.modulePath, 'directives', 'partials'));
+  mkdirp.sync(path.join(this.modulePath, 'assets'));
 };
 
 Generator.prototype.updateAppJs = function updateAppJs() {
   var module, newFile, substr, parsed, endName;
   var filePath = path.join(this.env.cwd, 'src', 'app', 'app.js');
-  var file = this.readFileAsString(filePath);
+  var file = wiring.readFileAsString(filePath);
   var startMarker = file.indexOf('.module(') + 8;
   var start = file.indexOf('[', startMarker);
   var end = file.indexOf(']', start);
@@ -99,11 +102,11 @@ Generator.prototype.updateAppJs = function updateAppJs() {
     this.appModuleName = this.projectName + '.' + this.camelModuleName;
   }
 
-  if (!this._.find(parsed.body[0].expression.elements, { 'value': this.appModuleName })) {
-    module = esprima.parse(this._.quote(this.appModuleName));
+  if (!_.find(parsed.body[0].expression.elements, { 'value': this.appModuleName })) {
+    module = esprima.parse('"' + this.appModuleName + '"');
     parsed.body[0].expression.elements.push(module.body[0].expression);
     newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
-    this.writeFileFromString(newFile, filePath);
+    wiring.writeFileFromString(newFile, filePath);
   }
 };
 
@@ -122,7 +125,7 @@ Generator.prototype.updateMainLess = function updateMainLess() {
 Generator.prototype.updateConfig = function updateConfig() {
   var existingModules = this.config.get('modules') || [];
   existingModules.push(this.moduleName);
-  this.config.set('modules', this._.uniq(existingModules));
+  this.config.set('modules', _.uniq(existingModules));
 
   if (this.config.get('name') !== this.projectName) {
     this.config.set('name', this.projectName);
@@ -130,7 +133,7 @@ Generator.prototype.updateConfig = function updateConfig() {
 };
 
 Generator.prototype._createModuleFile = function _createModuleFile(src, dest, options) {
-  options = this._.assign({
+  options = _.assign({
     suffix: '.' + dest + '.js',
     include: true
   }, options);
@@ -140,10 +143,10 @@ Generator.prototype._createModuleFile = function _createModuleFile(src, dest, op
   var destFileName = this.moduleName + options.suffix;
   var destination = path.join(filePath, destFileName);
 
-  this.mkdir(filePath);
+  mkdirp.sync(filePath);
   this.template(source, destination);
 
   if (options.include) {
-    this.includeModules.push(this._.quote(this.moduleName + '.' + dest, '\''));
+    this.includeModules.push('\'' + this.moduleName + '.' + dest + '\'');
   }
 };

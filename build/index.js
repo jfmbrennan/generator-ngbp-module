@@ -1,8 +1,10 @@
 'use strict';
 var util = require('util');
 var path = require('path');
+var glob = require('glob');
 var chalk = require('chalk');
 var format = require('dateformat');
+var wiring = require('html-wiring');
 var yeoman = require('yeoman-generator');
 
 var Generator = module.exports = function Generator(args, options) {
@@ -12,7 +14,7 @@ var Generator = module.exports = function Generator(args, options) {
   this.initApp = options.init;
   this.skipInstall = options['skip-install'] || false;
   this.banner = options.banner ?
-    this.readFileAsString(path.join(this.env.cwd, options.banner)) : '';
+    wiring.readFileAsString(path.join(this.env.cwd, options.banner)) : '';
   this.date = format(new Date(), 'dS mmmm yyyy');
 };
 
@@ -39,7 +41,7 @@ Generator.prototype.askForModules = function askForModules() {
 Generator.prototype.writeAppFiles = function writeAppFiles() {
   if (this.initApp) {
 
-    var files = this.expandFiles('**', { dot: true, cwd: this.templatePath() });
+    var files = glob.sync('**', { dot: true, nodir: true, cwd: this.templatePath() });
 
     for (var i = 0; i < files.length; i++) {
       var dest;
@@ -70,7 +72,7 @@ Generator.prototype.installDeps = function installDeps() {
       var message = '\n\nAlthough you have created a new app, it still won\'t do much.\nThe next step is to ';
       message += chalk.bold.yellow('yo ngbp-module <modulename>');  
       message += ' to create a usable ngbp module';
-      console.log(message);
-    }
+      this.log(message);
+    }.bind(this)
   });
 };

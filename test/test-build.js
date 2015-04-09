@@ -14,7 +14,7 @@ describe('ngbp-module:build', function () {
       .run(path.join(__dirname, '../build'))
       .inDir(path.join(__dirname, './temp'))
       .withArguments(['test'])
-      .withPrompt({createProject: 'y'})
+      .withPrompts({createProject: 'y'})
       .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);
   });
 

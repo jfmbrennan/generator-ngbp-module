@@ -1,6 +1,6 @@
 {
   "name": "generator-ngbp-module",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
@@ -27,9 +27,13 @@
     "dateformat": "^1.0.11",
     "escodegen": "^1.6.1",
     "esprima": "^2.0.0",
-    "fs-extra": "^0.17.0",
+    "fs-extra": "^0.18.0",
+    "glob": "^5.0.3",
+    "html-wiring": "^1.0.1",
+    "lodash": "^3.6.0",
+    "mkdirp": "^0.5.0",
     "touch": "0.0.3",
-    "yeoman-generator": "^0.18.0"
+    "yeoman-generator": "^0.19.1"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",

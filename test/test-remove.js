@@ -19,7 +19,7 @@ describe('ngbp-module:remove', function () {
 
   it('remove files', function (done) {
     runGen.withArguments(['newModule'])
-      .withPrompt({
+      .withPrompts({
         remove: 'Y',
         modulePath: 'app'
       })
@@ -42,7 +42,7 @@ describe('ngbp-module:remove', function () {
 
   it('updates app.js', function (done) {
     runGen.withArguments(['newModule'])
-      .withPrompt({
+      .withPrompts({
         remove: 'Y'
       })
       .on('ready', function () {
@@ -59,7 +59,7 @@ describe('ngbp-module:remove', function () {
 
   it('does not update app.js if expected syntax cannot be found', function (done) {
     runGen.withArguments(['newModule'])
-      .withPrompt({
+      .withPrompts({
         remove: 'Y'
       })
       .on('ready', function () {
@@ -76,7 +76,7 @@ describe('ngbp-module:remove', function () {
 
   it('accepts custom module location', function (done) {
     runGen.withArguments(['promptModule'])
-      .withPrompt({
+      .withPrompts({
         modulePath: 'app/subapp',
         remove: 'Y'
       })

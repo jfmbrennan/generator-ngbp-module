@@ -58,7 +58,7 @@ Use `--banner=<bannerfile>` to specify a file which contains the string to be us
 Create the module <modulename> using...
 
 ```bash
-yo ngbp-module <modulename>
+yo ngbp-module example
 ```
 
 which scaffolds out a complete angular module structure for you:
@@ -88,7 +88,7 @@ which scaffolds out a complete angular module structure for you:
 You can always reverse this by:
 
 ```bash
-yo ngbp-module:remove <modulename>
+yo ngbp-module:remove example
 ```
 
 
@@ -178,11 +178,9 @@ src/app/example/
 and updates `src/app/example/filters/example.filters.js` to include the newly created Filter as a dependency
 
 
-##TODO
+## Roadmap
 
- * Update Gruntfile scaffold to include banner
- * Add optional modules (util, template caching, etc) to scaffold during app build
- * Include option to use select from list of bootstrap templates during app build
+All features, improvements and bugs are being tracked on the Trello Board [Ngbp-module](https://trello.com/b/s7P0zM5Y/ngbp-module).
 
 ## License
 

@@ -14,7 +14,7 @@ describe('ngbp-module:service', function () {
       .run(path.join(__dirname, '../service'))
       .inDir(path.join(__dirname, './temp'))
       .withArguments(['Test'])
-      .withPrompt({
+      .withPrompts({
         moduleName: 'newModule'
       })
       .withGenerators([[helpers.createDummyGenerator(), 'mocha:app']]);

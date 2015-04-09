@@ -1,6 +1,8 @@
 'use strict';
+var _ = require('lodash');
 var fs = require('fs-extra');
 var path = require('path');
+var wiring = require('html-wiring');
 var yeoman = require('yeoman-generator');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
@@ -57,7 +59,7 @@ module.exports = yeoman.generators.NamedBase.extend({
 
   _updateAppJs: function (camelModuleName) {
     var filePath = path.join(this.env.cwd, 'src', 'app', 'app.js');
-    var file = this.readFileAsString(filePath);
+    var file = wiring.readFileAsString(filePath);
     var start = file.indexOf('[');
     var end = file.indexOf(']');
 
@@ -69,12 +71,12 @@ module.exports = yeoman.generators.NamedBase.extend({
     var parsed = esprima.parse(substr);
     var module = esprima.parse('\'' + camelModuleName + '\'');
 
-    this._.remove(parsed.body[0].expression.elements, function (val) {
+    _.remove(parsed.body[0].expression.elements, function (val) {
       return this.isEqual(val, module.body[0].expression);
-    }, this._);
+    }, _);
 
     var newFile = file.slice(0, start) + escodegen.generate(parsed).slice(0, -1) + file.slice(end + 1);
-    this.writeFileFromString(newFile, filePath);
+    wiring.writeFileFromString(newFile, filePath);
   }
 
 });

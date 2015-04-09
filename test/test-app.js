@@ -17,7 +17,7 @@ describe('ngbp-module:app', function () {
         .inDir(path.join(__dirname, './temp'))
         .withArguments(['newModule'])
         .withOptions({ 'skip-install': true })
-        .withPrompt({
+        .withPrompts({
           modules: ['templates', 'uiRouter']
         })
         .withGenerators(['../../module', [helpers.createDummyGenerator(), 'mocha:app']])
