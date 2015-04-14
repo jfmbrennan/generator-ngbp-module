@@ -1,5 +1,3 @@
-'use strict';
-
 describe('Service: <%= filename %>', function () {
 
   // load the service's module

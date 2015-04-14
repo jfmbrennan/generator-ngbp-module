@@ -1,5 +1,3 @@
-'use strict';
-
 describe('Filter: <%= filename %>', function () {
 
   // load the filter's module

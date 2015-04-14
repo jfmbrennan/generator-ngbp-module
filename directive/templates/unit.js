@@ -1,5 +1,3 @@
-'use strict';
-
 describe('Directive: <%= filename %>', function () {
 
   // load the directive's module
