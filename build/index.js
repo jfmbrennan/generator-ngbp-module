@@ -52,7 +52,7 @@ Generator.prototype.writeAppFiles = function writeAppFiles() {
           this.template(src, dest);
       } else {
           dest = path.join(this.env.cwd, f);
-          this.copy(src, dest);
+          this.fs.copy(src, dest, {process: false});
       }
     }
   }
