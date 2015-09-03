@@ -2,7 +2,7 @@
  * <%= capitalModuleName %> Module
  */
 
-angular.module('<%= appModuleName %>', [<%= moduleDependencies %>])
+angular.module('<%= appModuleName %>', [<%- moduleDependencies %>])
   .config(function config($stateProvider) {
     $stateProvider.state('<%= lowerModuleName %>', {
       url: '/<%= lowerModuleName %>',
